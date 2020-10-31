@@ -27,3 +27,18 @@ class Lector:
 
                 prerequisitos[programa][materia.upper()] = prerequisito
         return prerequisitos
+
+    def extraerCantidadMaterias(self, programa):
+        cantMaterias = []
+        try:
+            ws = self._wbAdicional['MateriasPorCuatri']
+        except:
+            print('Hoja con cantidad de materias por cuatri no encontrado')
+            sys.exit(1)
+
+        for celda in tuple(ws.columns)[0]:
+            if celda.value == programa:
+                cuatri = int(ws.cell(column = celda.column+1, row = celda.row).value)
+                materias = int(ws.cell(column = celda.column+2, row = celda.row).value)
+                cantMaterias.insert(cuatri, materias)
+        return cantMaterias
