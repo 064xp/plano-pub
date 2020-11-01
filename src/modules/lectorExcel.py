@@ -98,7 +98,6 @@ class Lector:
             except:
                 prerequisito = None
 
-            # TODO: encontrar una manera para determinar el cuatrimestre de la clase
             materias.append(Materia(nombreClase, ws.title, prerequisito))
 
         return materias
