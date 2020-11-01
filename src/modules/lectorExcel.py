@@ -1,8 +1,7 @@
 from openpyxl import load_workbook
+from modules.Materia import Materia
 
 class Lector:
-    _wbPrincipal = None
-    _wbAdicional = None
     def __init__(self, archivoPrincipal, archivoAdicionales):
         self._wbPrincipal = load_workbook(filename=archivoPrincipal)
         self._wbAdicional = load_workbook(filename=archivoAdicionales)
@@ -42,3 +41,56 @@ class Lector:
                 materias = int(ws.cell(column = celda.column+2, row = celda.row).value)
                 cantMaterias.insert(cuatri, materias)
         return cantMaterias
+
+    def extraerMaterias(self):
+        materias = []
+        for sheet in self._wbPrincipal:
+            ws = self._wbPrincipal[sheet.title]
+            materiasPrograma = self._extraerMateriasWS(sheet.title, self._prerequisitos)
+
+            # Checar si hay materias duplicadas
+            # Si si hay, nos quedamos con la original y le agregamos el programa nuevo
+            # a la lista de programas
+            for materia in materias:
+                for materiaP in materiasPrograma[:]:
+                    if materiaP.nombre.upper() == materia.nombre.upper():
+                        materia.programas.extend(materiaP.programas)
+                        materiasPrograma.remove(materiaP)
+            materias.extend(materiasPrograma)
+
+        return materias
+
+    def _materiaExisteEn(self, materia, listaMaterias):
+        for i, materiaL in enumerate(listaMaterias):
+            if materia.nombre == materiaL.nombre:
+                return i
+        return None
+
+    def _extraerMateriasWS(self, programa, prerequisitos):
+        materias = []
+        try:
+            ws = self._wbPrincipal[programa]
+        except:
+            print(f'Error cargando hoja {programa}')
+            sys.exit(1)
+
+        for celda in tuple(ws.rows)[1]:
+            if celda.column == 1:
+                continue
+
+            materia = celda.value
+            try:
+                paren = materia.index('(')
+                nombreClase = materia[:paren].rstrip()
+            except:
+                break
+
+            try:
+                prerequisito = prerequisitos[programa][nombreClase.upper()]
+            except:
+                prerequisito = None
+
+            # TODO: encontrar una manera para determinar el cuatrimestre de la clase
+            materias.append(Materia(nombreClase, 0, ws.title, prerequisito))
+
+        return materias

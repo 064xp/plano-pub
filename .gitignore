@@ -2,3 +2,4 @@ testData/
 scraps/
 
 _pycache_/
+.pyc
