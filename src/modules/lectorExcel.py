@@ -1,5 +1,6 @@
 from openpyxl import load_workbook
 from modules.Materia import Materia
+from modules.Programa import Programa
 
 class Lector:
     def __init__(self, archivoPrincipal, archivoAdicionales):
@@ -59,6 +60,12 @@ class Lector:
             materias.extend(materiasPrograma)
 
         return materias
+
+    def extraerProgramas(self):
+        programas = {}
+        for hoja in self._wbPrincipal:
+            programa = hoja.title
+            programas[programa] = Programa(programa, self.extraerCantidadMaterias(programa))
 
     def _materiaExisteEn(self, materia, listaMaterias):
         for i, materiaL in enumerate(listaMaterias):
