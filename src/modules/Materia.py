@@ -1,7 +1,6 @@
 class Materia:
-    def __init__(self, nombre, cuatri, programa, prerequisito = None):
+    def __init__(self, nombre, programa, prerequisito = None):
         self._nombre = nombre
-        self._cuatri = cuatri
         self._programas = [programa]
         self._prerequisito = prerequisito
 

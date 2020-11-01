@@ -1,5 +1,5 @@
 testData/
 scraps/
 
-_pycache_/
+__pycache__/
 .pyc

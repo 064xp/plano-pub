@@ -66,6 +66,7 @@ class Lector:
         for hoja in self._wbPrincipal:
             programa = hoja.title
             programas[programa] = Programa(programa, self.extraerCantidadMaterias(programa))
+        return programas
 
     def _materiaExisteEn(self, materia, listaMaterias):
         for i, materiaL in enumerate(listaMaterias):
@@ -98,6 +99,6 @@ class Lector:
                 prerequisito = None
 
             # TODO: encontrar una manera para determinar el cuatrimestre de la clase
-            materias.append(Materia(nombreClase, 0, ws.title, prerequisito))
+            materias.append(Materia(nombreClase, ws.title, prerequisito))
 
         return materias
