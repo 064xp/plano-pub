@@ -103,7 +103,7 @@ class Lector:
                     if calificacion <= 5:
                         materiasPendientes.append(materia)
 
-                alumnos.append(Alumno(registro, materiasPendientes))
+                alumnos.append(Alumno(registro, materiasPendientes, hoja.title))
         return alumnos
 
     def _materiaExisteEn(self, materia, listaMaterias):
