@@ -97,6 +97,8 @@ class Lector:
                         calificacion = celda.value
                     elif celda.value.isnumeric():
                         calificacion = int(celda.value)
+                    elif celda.value == 'NI':
+                        calificacion = 10
                     else:
                         calificacion = 0
 
