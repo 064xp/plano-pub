@@ -1,7 +1,8 @@
 class Materia:
-    def __init__(self, nombre, programa, prerequisito = None):
+    def __init__(self, nombre, programa, cuatri, prerequisito = None):
         self._nombre = nombre
         self._programas = [programa]
+        self._cuatri = cuatri
         self._prerequisito = prerequisito
 
     @property

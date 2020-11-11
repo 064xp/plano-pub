@@ -47,8 +47,8 @@ class Lector:
     def extraerMaterias(self):
         materias = []
         for hoja in self._wbPrincipal:
-            ws = self._wbPrincipal[sheet.title]
-            materiasPrograma = self._extraerMateriasWS(sheet.title, self._prerequisitos)
+            ws = self._wbPrincipal[hoja.title]
+            materiasPrograma = self._extraerMateriasWS(hoja.title, self._prerequisitos)
 
             # Checar si hay materias duplicadas
             # Si si hay, nos quedamos con la original y le agregamos el programa nuevo
@@ -128,7 +128,7 @@ class Lector:
 
             materia = celda.value
             try:
-                self._extraerNombreMateria(materia)
+                nombreMateria = self._extraerNombreMateria(materia)
             except:
                 break
 
@@ -137,7 +137,7 @@ class Lector:
             except:
                 prerequisito = None
 
-            materias.append(Materia(nombreClase, ws.title, prerequisito))
+            materias.append(Materia(nombreMateria, ws.title, 0, prerequisito))
 
         return materias
 
