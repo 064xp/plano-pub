@@ -2,6 +2,8 @@ from openpyxl import load_workbook
 from modules.definiciones.Materia import Materia
 from modules.definiciones.Programa import Programa
 from modules.definiciones.Alumno import Alumno
+from modules.funcionesAyuda import FuncionesAyuda as ayuda
+import sys
 
 class Lector:
     def __init__(self, archivoPrincipal, archivoAdicionales, mapasCurriculares):
@@ -65,7 +67,7 @@ class Lector:
                         continue
                     elif celda.value is None:
                         break
-                    materias[celda.value] = cuatri
+                    materias[ayuda.normalizar(celda.value)] = cuatri
             mapas[programa] = materias
         return mapas
 
@@ -114,7 +116,7 @@ class Lector:
                         continue
 
                     try: # si ya no hay mas materias
-                        materia = self._extraerNombreMateria(hoja.cell(column = celda.column, row = 2).value)
+                        materia = ayuda.extraerNombreMateria(hoja.cell(column = celda.column, row = 2).value)
                     except:
                         break
                     calificacion = 0
@@ -155,7 +157,7 @@ class Lector:
 
             materia = celda.value
             try:
-                nombreMateria = self._extraerNombreMateria(materia)
+                nombreMateria = ayuda.extraerNombreMateria(materia)
             except:
                 break
 
@@ -164,15 +166,12 @@ class Lector:
             except:
                 prerequisito = None
 
-            materias[nombreMateria] = Materia(nombreMateria, ws.title, 0, prerequisito)
-        return materias
+            try:
+                cuatri = self._mapas[programa][ayuda.normalizar(nombreMateria)]
+            except:
+                cuatri = 0
+                print(f'[!] No se pudo encontrar {programa}-{nombreMateria} en mapas curriculares')
 
-    def _extraerNombreMateria(self, nombre):
-        '''
-        Extrae el nombre de la materia de una cadena
-        del formato <materia> ([codigoMateria])
-        ej. Algebra II (12345) => Algebra II
-        '''
-        paren = nombre.index('(')
-        nombreClase = nombre[:paren].rstrip()
-        return nombreClase
+            materias[nombreMateria] = Materia(nombreMateria, ws.title, cuatri, prerequisito)
+
+        return materias
