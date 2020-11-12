@@ -4,9 +4,10 @@ from modules.definiciones.Programa import Programa
 from modules.definiciones.Alumno import Alumno
 
 class Lector:
-    def __init__(self, archivoPrincipal, archivoAdicionales):
+    def __init__(self, archivoPrincipal, archivoAdicionales, mapasCurriculares):
         self._wbPrincipal = load_workbook(filename=archivoPrincipal)
         self._wbAdicional = load_workbook(filename=archivoAdicionales)
+        self._mapas = self.cargarMapasCurriculares(mapasCurriculares)
         self._prerequisitos = self.extraerPrerequisitos()
 
     def extraerPrerequisitos(self):
@@ -43,6 +44,30 @@ class Lector:
                 materias = int(ws.cell(column = celda.column+2, row = celda.row).value)
                 cantMaterias.insert(cuatri, materias)
         return cantMaterias
+
+    def cargarMapasCurriculares(self, doc):
+        mapas = {}
+        try:
+            wb = load_workbook(filename = doc)
+        except:
+            print('No se pudo abrir el archivo de mapas mapas curriculares')
+            sys.exit(1)
+
+        for hoja in wb:
+            programa = hoja.title
+            materias = {}
+
+            for columna in hoja.columns:
+                cuatri = 0
+                for celda in columna:
+                    if celda.row == 1:
+                        cuatri = celda.value
+                        continue
+                    elif celda.value is None:
+                        break
+                    materias[celda.value] = cuatri
+            mapas[programa] = materias
+        return mapas
 
     def extraerMaterias(self):
         '''
