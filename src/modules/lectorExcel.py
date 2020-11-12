@@ -1,7 +1,7 @@
 from openpyxl import load_workbook
-from modules.Materia import Materia
-from modules.Programa import Programa
-from modules.Alumno import Alumno
+from modules.definiciones.Materia import Materia
+from modules.definiciones.Programa import Programa
+from modules.definiciones.Alumno import Alumno
 
 class Lector:
     def __init__(self, archivoPrincipal, archivoAdicionales):
