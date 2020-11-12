@@ -45,7 +45,12 @@ class Lector:
         return cantMaterias
 
     def extraerMaterias(self):
-        materias = []
+        '''
+        Extrae materias de todas las hojas en el documento
+        Regresa un diccionario, siendo las llaves los nombres de la materia
+        y los valores objetos tipo Materia
+        '''
+        materias = {}
         for hoja in self._wbPrincipal:
             ws = self._wbPrincipal[hoja.title]
             materiasPrograma = self._extraerMateriasWS(hoja.title, self._prerequisitos)
@@ -53,13 +58,11 @@ class Lector:
             # Checar si hay materias duplicadas
             # Si si hay, nos quedamos con la original y le agregamos el programa nuevo
             # a la lista de programas
-            for materia in materias:
-                for materiaP in materiasPrograma[:]:
-                    if materiaP.nombre.upper() == materia.nombre.upper():
-                        materia.programas.extend(materiaP.programas)
-                        materiasPrograma.remove(materiaP)
-            materias.extend(materiasPrograma)
-
+            for materiaP in dict(materiasPrograma).keys():
+                if materiaP in materias:
+                    materias[materiaP].programas.extend(materiasPrograma[materiaP].programas)
+                    materiasPrograma.pop(materiaP)
+            materias.update(materiasPrograma)
         return materias
 
     def extraerProgramas(self):
@@ -108,14 +111,13 @@ class Lector:
                 alumnos.append(Alumno(registro, materiasPendientes, hoja.title))
         return alumnos
 
-    def _materiaExisteEn(self, materia, listaMaterias):
-        for i, materiaL in enumerate(listaMaterias):
-            if materia.nombre == materiaL.nombre:
-                return i
-        return None
-
     def _extraerMateriasWS(self, programa, prerequisitos):
-        materias = []
+        '''
+        Extrae las materias de una hoja de Calculo
+        Regresa un diccionario, las claves siendo el nombre de la materia
+        los valores siendo objetos tipo Materia
+        '''
+        materias = {}
         try:
             ws = self._wbPrincipal[programa]
         except:
@@ -137,11 +139,15 @@ class Lector:
             except:
                 prerequisito = None
 
-            materias.append(Materia(nombreMateria, ws.title, 0, prerequisito))
-
+            materias[nombreMateria] = Materia(nombreMateria, ws.title, 0, prerequisito)
         return materias
 
     def _extraerNombreMateria(self, nombre):
+        '''
+        Extrae el nombre de la materia de una cadena
+        del formato <materia> ([codigoMateria])
+        ej. Algebra II (12345) => Algebra II
+        '''
         paren = nombre.index('(')
         nombreClase = nombre[:paren].rstrip()
         return nombreClase
