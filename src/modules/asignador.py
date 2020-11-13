@@ -1,9 +1,13 @@
 class Asignador:
-    def asignarMaterias(self, alumnos, programas):
-        for alumno in alumnos:
+    def __init__(self, alumnos, programas):
+        self.alumnos = alumnos
+        self.programas = programas
+
+    def asignarMaterias(self):
+        for alumno in self.alumnos:
             materias = alumno.materiasPendientes[0:10]
             cuatri = self.promediarCuatri(materias)
-            materiasPorCuatri = programas[alumno.carrera].materiasPorCuatri[cuatri-1]
+            materiasPorCuatri = self.programas[alumno.carrera].materiasPorCuatri[cuatri-1]
             materias = alumno.materiasPendientes[0:materiasPorCuatri]
 
             for materia in materias:
