@@ -164,7 +164,7 @@ class Lector:
 
             materia = celda.value
             try: #llave del diccionario es el nombre de la materia normalizado
-                nombreMateria = ayuda.normalizar(ayuda.extraerNombreMateria(materia))
+                nombreMateria = ayuda.extraerNombreMateria(materia)
             except:
                 break
 
@@ -179,6 +179,6 @@ class Lector:
                 cuatri = 0
                 print(f'[!] No se pudo encontrar {programa}-{nombreMateria} en mapas curriculares')
 
-            materias[nombreMateria] = Materia(nombreMateria, ws.title, cuatri, prerequisito)
+            materias[ayuda.normalizar(nombreMateria)] = Materia(nombreMateria, ws.title, cuatri, prerequisito)
 
         return materias
