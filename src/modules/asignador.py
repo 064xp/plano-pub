@@ -1,6 +1,5 @@
 class Asignador:
-
-    def asignarMaterias(self, materias, alumnos, programas):
+    def asignarMaterias(self, alumnos, programas):
         for alumno in alumnos:
             materias = alumno.materiasPendientes[0:10]
             cuatri = self.promediarCuatri(materias)
@@ -15,5 +14,4 @@ class Asignador:
         for materia in materiasPendientes:
             sumaCuatri+= materia.cuatri
         promedio = int(sumaCuatri/len(materiasPendientes))
-
         return promedio
