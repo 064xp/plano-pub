@@ -1,21 +1,4 @@
 class Asignador:
-    '''
-    materias = {
-        'IIS 2006':{
-            'logica': Materia(),
-            'algebra y geometria': Materia()
-        },
-        'IIS 2016':{
-            'logica y filosofia': Materia(),
-            'algebra y geometria': Materia()
-        }
-    }
-
-    programas = {
-    'IIS 2006': [4,2,3,5],
-    'IIS 2016': [5, 6, 4, 3]
-    }
-    '''
 
     def asignarMaterias(self, materias, alumnos, programas):
         for alumno in alumnos:
@@ -34,12 +17,3 @@ class Asignador:
         promedio = int(sumaCuatri/len(materiasPendientes))
 
         return promedio
-
-'''
-for alumno in alumnos:
-  materiasPorCuatri = 3
-  materiasPropuestas = alumno.materiasPendientes[:materiasPorCuatri]
-
-  for mp in materiasPropuestas:
-      materias[mp].alumnos.append(alumno.registro)
-'''
