@@ -14,6 +14,9 @@ class Materia:
     def nombre(self):
         return self._nombre
 
+    @nombre.setter
+    def nombre(self, nuevo):
+        self._nombre = nuevo
     @property
     def cuatri(self):
         return self._cuatri
