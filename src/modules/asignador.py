@@ -3,7 +3,7 @@ class Asignador:
         for alumno in alumnos:
             materias = alumno.materiasPendientes[0:10]
             cuatri = self.promediarCuatri(materias)
-            materiasPorCuatri = programas[alumno.carrera][cuatri-1]
+            materiasPorCuatri = programas[alumno.carrera].materiasPorCuatri[cuatri-1]
             materias = alumno.materiasPendientes[0:materiasPorCuatri]
 
             for materia in materias:
