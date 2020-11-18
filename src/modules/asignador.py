@@ -19,29 +19,13 @@ class Asignador:
     #     return promedio
 
 def calcularCuatri(self,materiasPendientes):
-    cuatriMayor = 0
-    cantidadMaterias = 0
-    cuatri = 0
     cantidad = []
-    for materia in materiasPendientes:
-        if cuatriMayor < materia.cuatri:
-            cuatriMayor = materia.cuatri
-        else:
-            continue
-
-    for i in range(cuatriMayor):
-        cantidad.append(0)
+    cuatriMayor = materiasPendientes[-1].cuatri
+    cantidad = [0 for i in range (cuatriMayor)]
 
     for materia in materiasPendientes:
-        if cantidad[materia.cuatri-1] >= 1:
-            cantidad[materia.cuatri-1]+=1
+        cantidad[materia.cuatri-1]+=1
 
-        else:
-            cantidad[materia.cuatri-1] = 1
-
-    for i in range(len(cantidad)):
-       if cantidadMaterias < cantidad[i]:
-           cantidadMaterias = cantidad[i]
-           cuatri = i
+    cuatri = cantidad.index(max(cantidad))
 
     return cuatri+1
