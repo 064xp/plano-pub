@@ -74,7 +74,8 @@ class Lector:
     def extraerMaterias(self):
         '''
         Extrae materias de todas las hojas en el documento
-        Regresa un diccionario, siendo las llaves los nombres de la materia
+        Regresa un diccionario, siendo las llaves los nombres de la materia normalizados
+            (sin acentos y en minusculas)
         y los valores objetos tipo Materia
         '''
         materias = {}
@@ -99,7 +100,12 @@ class Lector:
             programas[programa] = Programa(programa, self.extraerCantidadMaterias(programa))
         return programas
 
-    def extraerAlumnos(self):
+    def extraerAlumnos(self, materias):
+        '''Extrae alumnos de todas las hojas de calculo.
+        Recibe un diccionario de objetos Materia (previamente extraídos)
+        Un alumno tiene no. registro, carrera y materias pendientes,
+        materiasPendientes es una lista de referencias a materias del diccionario
+        '''
         alumnos = []
         for hoja in self._wbPrincipal:
             for i, fila in enumerate(hoja.rows):
@@ -116,7 +122,8 @@ class Lector:
                         continue
 
                     try: # si ya no hay mas materias
-                        materia = ayuda.extraerNombreMateria(hoja.cell(column = celda.column, row = 2).value)
+                        nombreMateria = ayuda.extraerNombreMateria(hoja.cell(column = celda.column, row = 2).value)
+                        materia = materias[ayuda.normalizar(nombreMateria)]
                     except:
                         break
                     calificacion = 0
@@ -156,7 +163,7 @@ class Lector:
                 continue
 
             materia = celda.value
-            try:
+            try: #llave del diccionario es el nombre de la materia normalizado
                 nombreMateria = ayuda.extraerNombreMateria(materia)
             except:
                 break
@@ -172,6 +179,6 @@ class Lector:
                 cuatri = 0
                 print(f'[!] No se pudo encontrar {programa}-{nombreMateria} en mapas curriculares')
 
-            materias[nombreMateria] = Materia(nombreMateria, ws.title, cuatri, prerequisito)
+            materias[ayuda.normalizar(nombreMateria)] = Materia(nombreMateria, ws.title, cuatri, prerequisito)
 
         return materias
