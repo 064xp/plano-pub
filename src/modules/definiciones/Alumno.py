@@ -2,7 +2,9 @@ class Alumno:
     def __init__(self, registro, materiasPendientes, carrera, nombre = ''):
         self._registro = registro
         self._materiasPendientes = materiasPendientes
+        self._nombre = nombre
         self._carrera = carrera
+        self.materiasPorCuatri = 0
 
     @property
     def registro(self):

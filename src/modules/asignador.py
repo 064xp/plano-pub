@@ -13,6 +13,7 @@ class Asignador:
             materias = alumno.materiasPendientes[0:10]
             cuatri = self.promediarCuatri(materias)
             materiasPorCuatri = self.programas[alumno.carrera].materiasPorCuatri[cuatri-1]
+            alumno.materiasPorCuatri = materiasPorCuatri
             materias = alumno.materiasPendientes[0:materiasPorCuatri]
 
             for materia in materias:
@@ -25,15 +26,19 @@ class Asignador:
         promedio = int(sumaCuatri/len(materiasPendientes))
         return promedio
 
-    def crearGrupos(self):
+    def crearGruposEnOrden(self):
         for llaveMateria in self.materias.keys():
             grupos = []
             materia = self.materias[llaveMateria]
-            for alumno in materia.alumnos:
-                alumno.materiasPendientes.remove(materia)
+
             while len(materia.alumnos) >= self.minAlumnos:
                 alumnosGrupo = materia.alumnos[:self.maxAlumnos]
                 materia.alumnos = materia.alumnos[self.maxAlumnos:]
                 grupos.append(Grupo(alumnosGrupo, materia.nombre))
 
             materia.grupos = grupos
+
+            for grupo in materia.grupos:
+                for alumno in grupo.alumnos:
+                    alumno.materiasPendientes.remove(materia)
+                    alumno.materiasPorCuatri -= 1
