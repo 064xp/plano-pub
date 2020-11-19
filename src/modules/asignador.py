@@ -28,8 +28,8 @@ class Asignador:
 
     def crearGruposEnOrden(self):
         for llaveMateria in self.materias.keys():
-            grupos = []
             materia = self.materias[llaveMateria]
+            grupos = []
 
             while len(materia.alumnos) >= self.minAlumnos:
                 alumnosGrupo = materia.alumnos[:self.maxAlumnos]
@@ -38,7 +38,31 @@ class Asignador:
 
             materia.grupos = grupos
 
-            for grupo in materia.grupos:
+            for grupo in grupos:
+                for alumno in grupo.alumnos:
+                    alumno.materiasPendientes.remove(materia)
+                    alumno.materiasPorCuatri -= 1
+
+    def crearGruposFueraOrden(self):
+        for llaveMateria in self.materias.keys():
+            materia = self.materias[llaveMateria]
+            grupos = []
+            materia.alumnos = []
+
+            for alumno in self.alumnos:
+                if (materia in alumno.materiasPendientes
+                    and materia.prerequisito not in alumno.materiasPendientes
+                    and alumno.materiasPorCuatri > 0):
+                    materia.alumnos.append(alumno)
+
+            while len(materia.alumnos) >= self.minAlumnos:
+                alumnosGrupo = materia.alumnos[:self.maxAlumnos]
+                materia.alumnos = materia.alumnos[self.maxAlumnos:]
+                grupos.append(Grupo(alumnosGrupo, materia.nombre))
+
+            materia.grupos.extend(grupos)
+
+            for grupo in grupos:
                 for alumno in grupo.alumnos:
                     alumno.materiasPendientes.remove(materia)
                     alumno.materiasPorCuatri -= 1
