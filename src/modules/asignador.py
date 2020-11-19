@@ -8,6 +8,12 @@ class Asignador:
         self.minAlumnos = minAlumnos
         self.maxAlumnos = maxAlumnos
 
+
+    def crearGrupos(self):
+        self.asignarMaterias()
+        self.crearGruposEnOrden()
+        self.crearGruposFueraOrden()
+
     def asignarMaterias(self):
         for alumno in self.alumnos:
             materias = alumno.materiasPendientes[0:10]
