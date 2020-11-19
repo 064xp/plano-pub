@@ -8,7 +8,6 @@ class Asignador:
         self.minAlumnos = minAlumnos
         self.maxAlumnos = maxAlumnos
 
-
     def crearGrupos(self):
         self.asignarMaterias()
         self.crearGruposEnOrden()
@@ -17,7 +16,7 @@ class Asignador:
     def asignarMaterias(self):
         for alumno in self.alumnos:
             materias = alumno.materiasPendientes[0:10]
-            cuatri = self.promediarCuatri(materias)
+            cuatri = self.calcularCuatri(materias)
             materiasPorCuatri = self.programas[alumno.carrera].materiasPorCuatri[cuatri-1]
             alumno.materiasPorCuatri = materiasPorCuatri
             materias = alumno.materiasPendientes[0:materiasPorCuatri]
@@ -25,12 +24,16 @@ class Asignador:
             for materia in materias:
                 materia.alumnos.append(alumno)
 
-    def promediarCuatri(self, materiasPendientes):
-        sumaCuatri = 0
+    def calcularCuatri(self, materiasPendientes):
+        cantidad = []
+        cuatriMayor = materiasPendientes[-1].cuatri
+        cantidad = [0 for i in range (cuatriMayor)]
+
         for materia in materiasPendientes:
-            sumaCuatri+= materia.cuatri
-        promedio = int(sumaCuatri/len(materiasPendientes))
-        return promedio
+            cantidad[materia.cuatri-1]+=1
+
+        cuatri = cantidad.index(max(cantidad))
+        return cuatri+1
 
     def crearGruposEnOrden(self):
         for llaveMateria in self.materias.keys():
