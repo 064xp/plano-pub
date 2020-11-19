@@ -5,6 +5,7 @@ class Materia:
         self._cuatri = cuatri
         self._prerequisito = prerequisito
         self._alumnos = []
+        self._grupos = []
 
     @property
     def prerequisito(self):
@@ -17,6 +18,7 @@ class Materia:
     @nombre.setter
     def nombre(self, nuevo):
         self._nombre = nuevo
+
     @property
     def cuatri(self):
         return self._cuatri
@@ -39,6 +41,17 @@ class Materia:
     @alumnos.setter
     def alumnos(self, nuevoValor):
         if type(nuevoValor) == list:
-            self._programas = nuevoValor
+            self._alumnos = nuevoValor
         else:
             raise TypeError('Los alumnos de una clase deben ser una lista')
+
+    @property
+    def grupos(self):
+        return self._grupos
+
+    @grupos.setter
+    def grupos(self, nuevoValor):
+        if type(nuevoValor) == list:
+            self._grupos = nuevoValor
+        else:
+            raise TypeError('Los grupos de una clase deben ser una lista')

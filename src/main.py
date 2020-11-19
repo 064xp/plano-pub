@@ -6,5 +6,5 @@ materias = l.extraerMaterias()
 alumnos = l.extraerAlumnos(materias)
 programas = l.extraerProgramas()
 
-asignador = Asignador(alumnos, programas)
-asignador.asignarMaterias()
+asignador = Asignador(alumnos, programas, materias)
+asignador.crearGrupos()
