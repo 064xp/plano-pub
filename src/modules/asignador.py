@@ -15,7 +15,7 @@ class Asignador:
 
     def asignarMaterias(self):
         for alumno in self.alumnos:
-            materias = alumno.materiasPendientes[0:10]
+            materias = alumno.materiasPendientes[0:8]
             cuatri = self.calcularCuatri(materias)
             materiasPorCuatri = self.programas[alumno.carrera].materiasPorCuatri[cuatri-1]
             alumno.materiasPorCuatri = materiasPorCuatri
@@ -26,12 +26,13 @@ class Asignador:
 
     def calcularCuatri(self, materiasPendientes):
         cantidad = []
-        cuatriMayor = materiasPendientes[-1].cuatri
+        cuatriMayor = max(materiasPendientes, key = lambda materia : materia.cuatri).cuatri
         cantidad = [0 for i in range (cuatriMayor)]
 
         for materia in materiasPendientes:
-            cantidad[materia.cuatri-1]+=1
+                cantidad[materia.cuatri-1]+=1
 
+        materia.cuatri
         cuatri = cantidad.index(max(cantidad))
         return cuatri+1
 

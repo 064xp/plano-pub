@@ -176,7 +176,7 @@ class Lector:
             try:
                 cuatri = self._mapas[programa][ayuda.normalizar(nombreMateria)]
             except:
-                cuatri = 0
+                cuatri = 1
                 print(f'[!] No se pudo encontrar {programa}-{nombreMateria} en mapas curriculares')
 
             materias[ayuda.normalizar(nombreMateria)] = Materia(nombreMateria, ws.title, cuatri, prerequisito)
