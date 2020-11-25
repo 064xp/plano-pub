@@ -14,12 +14,13 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_ArchivosForm(object):
     def setupUi(self, ArchivosForm):
         ArchivosForm.setObjectName("ArchivosForm")
-        ArchivosForm.resize(711, 540)
-        ArchivosForm.setStyleSheet("QVBoxLayout{\n"
-"    background-color: #7D211A;\n"
+        ArchivosForm.resize(711, 582)
+        ArchivosForm.setStyleSheet("QWidget#ArchivosForm{\n"
+"    background-color: rgb(27, 27, 27);\n"
 "}")
+        self.verticalLayout_3 = QtWidgets.QVBoxLayout(ArchivosForm)
+        self.verticalLayout_3.setObjectName("verticalLayout_3")
         self.Container = QtWidgets.QFrame(ArchivosForm)
-        self.Container.setGeometry(QtCore.QRect(20, 20, 671, 501))
         self.Container.setStyleSheet("QFrame#Container{\n"
 "    background-color: #7D211A;\n"
 "    border-radius: 10px;\n"
@@ -27,14 +28,13 @@ class Ui_ArchivosForm(object):
         self.Container.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.Container.setFrameShadow(QtWidgets.QFrame.Raised)
         self.Container.setObjectName("Container")
-        self.verticalLayoutWidget = QtWidgets.QWidget(self.Container)
-        self.verticalLayoutWidget.setGeometry(QtCore.QRect(19, 19, 631, 461))
-        self.verticalLayoutWidget.setObjectName("verticalLayoutWidget")
-        self.verticalLayout = QtWidgets.QVBoxLayout(self.verticalLayoutWidget)
-        self.verticalLayout.setSizeConstraint(QtWidgets.QLayout.SetDefaultConstraint)
-        self.verticalLayout.setContentsMargins(0, 0, 0, 0)
-        self.verticalLayout.setObjectName("verticalLayout")
-        self.Titulo = QtWidgets.QLabel(self.verticalLayoutWidget)
+        self.verticalLayout_4 = QtWidgets.QVBoxLayout(self.Container)
+        self.verticalLayout_4.setObjectName("verticalLayout_4")
+        self.ContVerticalLayout = QtWidgets.QVBoxLayout()
+        self.ContVerticalLayout.setSizeConstraint(QtWidgets.QLayout.SetDefaultConstraint)
+        self.ContVerticalLayout.setContentsMargins(-1, -1, -1, 0)
+        self.ContVerticalLayout.setObjectName("ContVerticalLayout")
+        self.Titulo = QtWidgets.QLabel(self.Container)
         font = QtGui.QFont()
         font.setPointSize(26)
         self.Titulo.setFont(font)
@@ -42,8 +42,8 @@ class Ui_ArchivosForm(object):
         self.Titulo.setStyleSheet("color: white;")
         self.Titulo.setAlignment(QtCore.Qt.AlignCenter)
         self.Titulo.setObjectName("Titulo")
-        self.verticalLayout.addWidget(self.Titulo)
-        self.widget = QtWidgets.QWidget(self.verticalLayoutWidget)
+        self.ContVerticalLayout.addWidget(self.Titulo)
+        self.widget = QtWidgets.QWidget(self.Container)
         self.widget.setObjectName("widget")
         self.verticalLayoutWidget_2 = QtWidgets.QWidget(self.widget)
         self.verticalLayoutWidget_2.setGeometry(QtCore.QRect(1, 9, 631, 87))
@@ -68,11 +68,11 @@ class Ui_ArchivosForm(object):
         self.ArchivosPrincipales = QtWidgets.QWidget(self.verticalLayoutWidget_2)
         self.ArchivosPrincipales.setObjectName("ArchivosPrincipales")
         self.verticalLayout_2.addWidget(self.ArchivosPrincipales)
-        self.pushButton = QtWidgets.QPushButton(self.verticalLayoutWidget_2)
+        self.btnDatosPrincipales = QtWidgets.QPushButton(self.verticalLayoutWidget_2)
         font = QtGui.QFont()
         font.setPointSize(15)
-        self.pushButton.setFont(font)
-        self.pushButton.setStyleSheet("QPushButton{\n"
+        self.btnDatosPrincipales.setFont(font)
+        self.btnDatosPrincipales.setStyleSheet("QPushButton{\n"
 "background-color: #BABABA;\n"
 "padding: 5px;\n"
 "max-width: 150px;\n"
@@ -91,10 +91,10 @@ class Ui_ArchivosForm(object):
 "}\n"
 "\n"
 "")
-        self.pushButton.setObjectName("pushButton")
-        self.verticalLayout_2.addWidget(self.pushButton)
-        self.verticalLayout.addWidget(self.widget)
-        self.widget_2 = QtWidgets.QWidget(self.verticalLayoutWidget)
+        self.btnDatosPrincipales.setObjectName("btnDatosPrincipales")
+        self.verticalLayout_2.addWidget(self.btnDatosPrincipales)
+        self.ContVerticalLayout.addWidget(self.widget)
+        self.widget_2 = QtWidgets.QWidget(self.Container)
         self.widget_2.setObjectName("widget_2")
         self.verticalLayoutWidget_6 = QtWidgets.QWidget(self.widget_2)
         self.verticalLayoutWidget_6.setGeometry(QtCore.QRect(1, 9, 631, 87))
@@ -116,14 +116,14 @@ class Ui_ArchivosForm(object):
         self.TituloDatosPrincipales_5.setStyleSheet("color: white;")
         self.TituloDatosPrincipales_5.setObjectName("TituloDatosPrincipales_5")
         self.verticalLayout_6.addWidget(self.TituloDatosPrincipales_5)
-        self.archivosAdicionales = QtWidgets.QWidget(self.verticalLayoutWidget_6)
-        self.archivosAdicionales.setObjectName("archivosAdicionales")
-        self.verticalLayout_6.addWidget(self.archivosAdicionales)
-        self.pushButton_5 = QtWidgets.QPushButton(self.verticalLayoutWidget_6)
+        self.ArchivosAdicionales = QtWidgets.QWidget(self.verticalLayoutWidget_6)
+        self.ArchivosAdicionales.setObjectName("ArchivosAdicionales")
+        self.verticalLayout_6.addWidget(self.ArchivosAdicionales)
+        self.btnDatosAdicionales = QtWidgets.QPushButton(self.verticalLayoutWidget_6)
         font = QtGui.QFont()
         font.setPointSize(15)
-        self.pushButton_5.setFont(font)
-        self.pushButton_5.setStyleSheet("QPushButton{\n"
+        self.btnDatosAdicionales.setFont(font)
+        self.btnDatosAdicionales.setStyleSheet("QPushButton{\n"
 "background-color: #BABABA;\n"
 "padding: 5px;\n"
 "max-width: 150px;\n"
@@ -142,12 +142,17 @@ class Ui_ArchivosForm(object):
 "}\n"
 "\n"
 "")
-        self.pushButton_5.setObjectName("pushButton_5")
-        self.verticalLayout_6.addWidget(self.pushButton_5)
-        self.verticalLayout.addWidget(self.widget_2)
-        self.widget_3 = QtWidgets.QWidget(self.verticalLayoutWidget)
-        self.widget_3.setObjectName("widget_3")
-        self.verticalLayoutWidget_7 = QtWidgets.QWidget(self.widget_3)
+        self.btnDatosAdicionales.setObjectName("btnDatosAdicionales")
+        self.verticalLayout_6.addWidget(self.btnDatosAdicionales)
+        self.ContVerticalLayout.addWidget(self.widget_2)
+        self.MapasWidget = QtWidgets.QWidget(self.Container)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Minimum)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.MapasWidget.sizePolicy().hasHeightForWidth())
+        self.MapasWidget.setSizePolicy(sizePolicy)
+        self.MapasWidget.setObjectName("MapasWidget")
+        self.verticalLayoutWidget_7 = QtWidgets.QWidget(self.MapasWidget)
         self.verticalLayoutWidget_7.setGeometry(QtCore.QRect(1, 9, 631, 91))
         self.verticalLayoutWidget_7.setObjectName("verticalLayoutWidget_7")
         self.verticalLayout_7 = QtWidgets.QVBoxLayout(self.verticalLayoutWidget_7)
@@ -168,13 +173,18 @@ class Ui_ArchivosForm(object):
         self.TituloDatosPrincipales_6.setObjectName("TituloDatosPrincipales_6")
         self.verticalLayout_7.addWidget(self.TituloDatosPrincipales_6)
         self.ArchivosMapas = QtWidgets.QWidget(self.verticalLayoutWidget_7)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Minimum)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.ArchivosMapas.sizePolicy().hasHeightForWidth())
+        self.ArchivosMapas.setSizePolicy(sizePolicy)
         self.ArchivosMapas.setObjectName("ArchivosMapas")
         self.verticalLayout_7.addWidget(self.ArchivosMapas)
-        self.pushButton_6 = QtWidgets.QPushButton(self.verticalLayoutWidget_7)
+        self.btnMapas = QtWidgets.QPushButton(self.verticalLayoutWidget_7)
         font = QtGui.QFont()
         font.setPointSize(15)
-        self.pushButton_6.setFont(font)
-        self.pushButton_6.setStyleSheet("QPushButton{\n"
+        self.btnMapas.setFont(font)
+        self.btnMapas.setStyleSheet("QPushButton{\n"
 "background-color: #BABABA;\n"
 "padding: 5px;\n"
 "max-width: 150px;\n"
@@ -193,21 +203,21 @@ class Ui_ArchivosForm(object):
 "}\n"
 "\n"
 "")
-        self.pushButton_6.setObjectName("pushButton_6")
-        self.verticalLayout_7.addWidget(self.pushButton_6)
-        self.verticalLayout.addWidget(self.widget_3)
+        self.btnMapas.setObjectName("btnMapas")
+        self.verticalLayout_7.addWidget(self.btnMapas)
+        self.ContVerticalLayout.addWidget(self.MapasWidget)
         self.horizontalLayout_3 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_3.setObjectName("horizontalLayout_3")
-        self.btnComenzar = QtWidgets.QPushButton(self.verticalLayoutWidget)
+        self.btnComenzar = QtWidgets.QPushButton(self.Container)
         font = QtGui.QFont()
-        font.setPointSize(15)
+        font.setPointSize(16)
         self.btnComenzar.setFont(font)
         self.btnComenzar.setStyleSheet("QPushButton{\n"
 "background-color: #EF8903;\n"
-"padding: 5px;\n"
-"max-width: 150px;\n"
+"padding: 7px;\n"
+"max-width: 160px;\n"
 "border-style: outset;\n"
-"border-radius: 15px;\n"
+"border-radius: 16px;\n"
 "color:  white;\n"
 "}\n"
 "\n"
@@ -223,12 +233,14 @@ class Ui_ArchivosForm(object):
 "")
         self.btnComenzar.setObjectName("btnComenzar")
         self.horizontalLayout_3.addWidget(self.btnComenzar)
-        self.verticalLayout.addLayout(self.horizontalLayout_3)
-        self.verticalLayout.setStretch(0, 5)
-        self.verticalLayout.setStretch(1, 10)
-        self.verticalLayout.setStretch(2, 10)
-        self.verticalLayout.setStretch(3, 10)
-        self.verticalLayout.setStretch(4, 6)
+        self.ContVerticalLayout.addLayout(self.horizontalLayout_3)
+        self.ContVerticalLayout.setStretch(0, 5)
+        self.ContVerticalLayout.setStretch(1, 10)
+        self.ContVerticalLayout.setStretch(2, 10)
+        self.ContVerticalLayout.setStretch(3, 10)
+        self.ContVerticalLayout.setStretch(4, 6)
+        self.verticalLayout_4.addLayout(self.ContVerticalLayout)
+        self.verticalLayout_3.addWidget(self.Container)
 
         self.retranslateUi(ArchivosForm)
         QtCore.QMetaObject.connectSlotsByName(ArchivosForm)
@@ -238,9 +250,9 @@ class Ui_ArchivosForm(object):
         ArchivosForm.setWindowTitle(_translate("ArchivosForm", "Form"))
         self.Titulo.setText(_translate("ArchivosForm", "Planeación"))
         self.TituloDatosPrincipales.setText(_translate("ArchivosForm", "Datos Principales (Datos de Alumnos)"))
-        self.pushButton.setText(_translate("ArchivosForm", "Agregar +"))
+        self.btnDatosPrincipales.setText(_translate("ArchivosForm", "Agregar +"))
         self.TituloDatosPrincipales_5.setText(_translate("ArchivosForm", "Datos Adicionales (Prerequisitos y Materias por cuatri)"))
-        self.pushButton_5.setText(_translate("ArchivosForm", "Agregar +"))
+        self.btnDatosAdicionales.setText(_translate("ArchivosForm", "Agregar +"))
         self.TituloDatosPrincipales_6.setText(_translate("ArchivosForm", "Mapas Curriculares"))
-        self.pushButton_6.setText(_translate("ArchivosForm", "Agregar +"))
+        self.btnMapas.setText(_translate("ArchivosForm", "Agregar +"))
         self.btnComenzar.setText(_translate("ArchivosForm", "Comenzar"))
