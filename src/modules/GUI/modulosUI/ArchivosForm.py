@@ -15,9 +15,7 @@ class Ui_ArchivosForm(object):
     def setupUi(self, ArchivosForm):
         ArchivosForm.setObjectName("ArchivosForm")
         ArchivosForm.resize(711, 582)
-        ArchivosForm.setStyleSheet("QWidget#ArchivosForm{\n"
-"    background-color: rgb(27, 27, 27);\n"
-"}")
+        ArchivosForm.setStyleSheet("")
         self.verticalLayout_3 = QtWidgets.QVBoxLayout(ArchivosForm)
         self.verticalLayout_3.setObjectName("verticalLayout_3")
         self.Container = QtWidgets.QFrame(ArchivosForm)

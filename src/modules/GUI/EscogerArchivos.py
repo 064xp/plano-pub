@@ -3,9 +3,9 @@ from PyQt5 import QtWidgets as qtw
 from PyQt5 import QtCore as qtc
 from PyQt5 import QtGui as qtg
 
-from ArchivosForm import Ui_ArchivosForm
+from modules.GUI.modulosUI.ArchivosForm import Ui_ArchivosForm
 
-class MainWindow(qtw.QWidget, Ui_ArchivosForm):
+class EscogerArchivos(qtw.QWidget, Ui_ArchivosForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.setupUi(self)
@@ -60,9 +60,3 @@ class MainWindow(qtw.QWidget, Ui_ArchivosForm):
         msgBox.setWindowTitle("Comenzando...")
         msgBox.setText("Formando grupos y creando horarios...")
         msgBox.exec();
-
-
-app = qtw.QApplication(sys.argv)
-w = MainWindow()
-
-sys.exit(app.exec_())
