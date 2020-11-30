@@ -13,6 +13,7 @@ l = Lector('../testData/datosPrincipales.xlsx', '../testData/datosAdicionales.xl
 materias = l.extraerMaterias()
 alumnos = l.extraerAlumnos(materias)
 programas = l.extraerProgramas()
+l.cerrarArchivos()
 
 asignador = Asignador(alumnos, programas, materias)
 asignador.crearGrupos()
@@ -26,6 +27,5 @@ app = qtw.QApplication(sys.argv)
 ventanaResultados = None
 ventanaEscogerArchivos = EscogerArchivos()
 ventanaEscogerArchivos.btnComenzar.clicked.connect(mostrarResultados)
-
 
 sys.exit(app.exec_())
