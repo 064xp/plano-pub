@@ -6,12 +6,12 @@ from PyQt5 import QtGui as qtg
 from modules.GUI.modulosUI.ArchivosForm import Ui_ArchivosForm
 
 class EscogerArchivos(qtw.QWidget, Ui_ArchivosForm):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+    def __init__(self):
+        super().__init__()
         self.setupUi(self)
         self.datosPrincipales = ''
         self.datosAdicionales = ''
-        self.mapas = []
+        self.mapas = ''
 
         # code goes here
         self.btnDatosPrincipales.clicked.connect(self.setDatosPrincipales)
@@ -19,21 +19,22 @@ class EscogerArchivos(qtw.QWidget, Ui_ArchivosForm):
         self.btnMapas.clicked.connect(self.setMapas)
         self.btnComenzar.clicked.connect(self.comenzar)
 
+        self.comenzar.connect(self.test)
+
         self.show()
 
     def setDatosPrincipales(self):
-        if not self.datosPrincipales:
-            self.datosPrincipales = self.obtenerArchivo()[0]
-            self.crearArchivoLabelEn(self.datosPrincipales, self.ArchivosPrincipales)
+        self.datosPrincipales = self.obtenerArchivo()[0]
+        self.crearArchivoLabelEn(self.datosPrincipales, self.ArchivosPrincipales)
 
     def setDatosAdicionales(self):
-        if not self.datosAdicionales:
-            self.datosAdicionales = self.obtenerArchivo()[0]
-            self.crearArchivoLabelEn(self.datosAdicionales, self.ArchivosAdicionales)
+        self.datosAdicionales = self.obtenerArchivo()[0]
+        self.crearArchivoLabelEn(self.datosAdicionales, self.ArchivosAdicionales)
 
     def setMapas(self):
-        self.mapas.append(self.obtenerArchivo()[0])
+        self.mapas = self.obtenerArchivo()[0]
         self.crearArchivoLabelEn(self.mapas[-1], self.ArchivosMapas)
+
         layout = self.ContVerticalLayout
         index = layout.indexOf(self.MapasWidget)
         layout.setStretch(index, 12 + len(self.mapas))
@@ -53,6 +54,9 @@ class EscogerArchivos(qtw.QWidget, Ui_ArchivosForm):
                 layout = qtw.QVBoxLayout()
                 layout.addWidget(label)
                 padre.setLayout(layout)
+
+    def test(self):
+        print('test')
 
     def comenzar(self):
         msgBox = qtw.QMessageBox()

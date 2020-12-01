@@ -11,12 +11,15 @@ class Main:
     def __init__(self):
         self.ventanaResultados = None
         self.ventanaEscogerArchivos = EscogerArchivos()
-        self.ventanaEscogerArchivos.btnComenzar.clicked.connect(self.comenzarAnalisis)
+        self.ventanaEscogerArchivos.btnComenzar.clicked.connect(self.setArchivos)
         self.archivoPrincipal = '../testData/datosPrincipales.xlsx'
         self.archivoAdicional = '../testData/datosAdicionales.xlsx'
         self.mapas = '../testData/mapasCurriculares.xlsx'
 
     def comenzarAnalisis(self):
+        print(self.archivoPrincipal)
+        print(self.archivoAdicional)
+        print(self.mapas)
         l = Lector(self.archivoPrincipal, self.archivoAdicional, self.mapas)
         self.materias = l.extraerMaterias()
         self.alumnos = l.extraerAlumnos(self.materias)
@@ -27,6 +30,12 @@ class Main:
         asignador.crearGrupos()
 
         self.mostrarResultados()
+
+    def setArchivos(self):
+        self.archivoPrincipal = self.ventanaEscogerArchivos.datosPrincipales
+        self.archivoAdicional = self.ventanaEscogerArchivos.datosAdicionales
+        self.mapas = self.ventanaEscogerArchivos.mapas
+        self.comenzarAnalisis()
 
     def mostrarResultados(self):
         self.ventanaResultados = ResultadosWindow()
