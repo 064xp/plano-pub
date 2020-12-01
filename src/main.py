@@ -1,7 +1,5 @@
 import sys
 from PyQt5 import QtWidgets as qtw
-from PyQt5 import QtCore as qtc
-from PyQt5 import QtGui as qtg
 
 from modules.lectorExcel import Lector
 from modules.asignador import Asignador
@@ -9,26 +7,31 @@ from modules.asignador import Asignador
 from modules.GUI.EscogerArchivos import EscogerArchivos
 from modules.GUI.Resultados import ResultadosWindow
 
-l = Lector('../testData/datosPrincipales.xlsx', '../testData/datosAdicionales.xlsx', '../testData/mapasCurriculares.xlsx')
-materias = l.extraerMaterias()
-alumnos = l.extraerAlumnos(materias)
-programas = l.extraerProgramas()
-l.cerrarArchivos()
+class Main:
+    def __init__(self):
+        self.ventanaResultados = None
+        self.ventanaEscogerArchivos = EscogerArchivos()
+        self.ventanaEscogerArchivos.btnComenzar.clicked.connect(self.comenzarAnalisis)
+        self.archivoPrincipal = '../testData/datosPrincipales.xlsx'
+        self.archivoAdicional = '../testData/datosAdicionales.xlsx'
+        self.mapas = '../testData/mapasCurriculares.xlsx'
 
-# print(materias['algebra lineal'].__dict__)
-# print(l._mapas)
+    def comenzarAnalisis(self):
+        l = Lector(self.archivoPrincipal, self.archivoAdicional, self.mapas)
+        self.materias = l.extraerMaterias()
+        self.alumnos = l.extraerAlumnos(self.materias)
+        self.programas = l.extraerProgramas()
+        l.cerrarArchivos()
 
-asignador = Asignador(alumnos, programas, materias)
-asignador.crearGrupos()
+        asignador = Asignador(self.alumnos, self.programas, self.materias)
+        asignador.crearGrupos()
 
-def mostrarResultados():
-    global ventanaResultados
-    ventanaResultados = ResultadosWindow()
-    ventanaEscogerArchivos.close()
+        self.mostrarResultados()
+
+    def mostrarResultados(self):
+        self.ventanaResultados = ResultadosWindow()
+        self.ventanaEscogerArchivos.close()
 
 app = qtw.QApplication(sys.argv)
-ventanaResultados = None
-ventanaEscogerArchivos = EscogerArchivos()
-ventanaEscogerArchivos.btnComenzar.clicked.connect(mostrarResultados)
-
+main = Main()
 sys.exit(app.exec_())
