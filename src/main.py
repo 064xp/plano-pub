@@ -15,6 +15,9 @@ alumnos = l.extraerAlumnos(materias)
 programas = l.extraerProgramas()
 l.cerrarArchivos()
 
+# print(materias['algebra lineal'].__dict__)
+# print(l._mapas)
+
 asignador = Asignador(alumnos, programas, materias)
 asignador.crearGrupos()
 
