@@ -19,4 +19,4 @@ class FuncionesAyuda:
         '''
         normalizado = ''.join(c for c in unicodedata.normalize('NFD', str)
                             if unicodedata.category(c) != 'Mn')
-        return normalizado.lower()
+        return normalizado.lower().replace(' ', '')

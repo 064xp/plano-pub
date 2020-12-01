@@ -67,7 +67,13 @@ class Lector:
                         continue
                     elif celda.value is None:
                         break
-                    materias[ayuda.normalizar(celda.value)] = cuatri
+                    info = ayuda.normalizar(celda.value).split('#')
+                    materia = {
+                        'cuatri': cuatri,
+                        'horasPorSemana': info[1],
+                        'tieneLab': True if len(info) == 3 else False
+                    }
+                    materias[ayuda.normalizar(info[0])] = materia
             mapas[programa] = materias
         return mapas
 
@@ -174,11 +180,16 @@ class Lector:
                 prerequisito = None
 
             try:
-                cuatri = self._mapas[programa][ayuda.normalizar(nombreMateria)]
+                info = self._mapas[programa][ayuda.normalizar(nombreMateria)]
             except:
-                cuatri = 1
+                info = {
+                    'cuatri': 1,
+                    'horasPorSemana': 0,
+                    'tieneLab': False
+                }
                 print(f'[!] No se pudo encontrar {programa}-{nombreMateria} en mapas curriculares')
 
-            materias[ayuda.normalizar(nombreMateria)] = Materia(nombreMateria, ws.title, cuatri, prerequisito)
+            materias[ayuda.normalizar(nombreMateria)] = \
+                Materia(nombreMateria, ws.title, info['cuatri'], info['horasPorSemana'], info['tieneLab'], prerequisito)
 
         return materias

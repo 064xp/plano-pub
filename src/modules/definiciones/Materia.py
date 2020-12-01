@@ -1,11 +1,13 @@
 class Materia:
-    def __init__(self, nombre, programa, cuatri, prerequisito = None):
+    def __init__(self, nombre, programa, cuatri, horasPorSemana, tieneLab, prerequisito = None):
         self._nombre = nombre
         self._programas = [programa]
         self._cuatri = cuatri
         self._prerequisito = prerequisito
         self._alumnos = []
         self._grupos = []
+        self._horasPorSemana = horasPorSemana
+        self._tieneLab = tieneLab
 
     @property
     def prerequisito(self):
@@ -55,3 +57,11 @@ class Materia:
             self._grupos = nuevoValor
         else:
             raise TypeError('Los grupos de una clase deben ser una lista')
+
+    @property
+    def horasPorSemana(self):
+        return self._horasPorSemana
+
+    @property
+    def tieneLab(self):
+        return self._tieneLab
