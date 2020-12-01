@@ -6,6 +6,7 @@ from modules.asignador import Asignador
 
 from modules.GUI.EscogerArchivos import EscogerArchivos
 from modules.GUI.Resultados import ResultadosWindow
+from modules.GUI.DialogoAlerta import DialogoAlerta
 
 class Main:
     def __init__(self):
@@ -20,7 +21,11 @@ class Main:
         print(self.archivoPrincipal)
         print(self.archivoAdicional)
         print(self.mapas)
-        l = Lector(self.archivoPrincipal, self.archivoAdicional, self.mapas)
+        try:
+            l = Lector(self.archivoPrincipal, self.archivoAdicional, self.mapas)
+        except:
+            DialogoAlerta('Error de Lectura', 'Hubo un error al intentar abrir los archivos')
+
         self.materias = l.extraerMaterias()
         self.alumnos = l.extraerAlumnos(self.materias)
         self.programas = l.extraerProgramas()
@@ -32,10 +37,14 @@ class Main:
         self.mostrarResultados()
 
     def setArchivos(self):
-        self.archivoPrincipal = self.ventanaEscogerArchivos.datosPrincipales
-        self.archivoAdicional = self.ventanaEscogerArchivos.datosAdicionales
-        self.mapas = self.ventanaEscogerArchivos.mapas
-        self.comenzarAnalisis()
+        principales = self.ventanaEscogerArchivos.datosPrincipales
+        adicionales =  self.ventanaEscogerArchivos.datosAdicionales
+        mapas =  self.ventanaEscogerArchivos.mapas
+        if principales and adicionales and mapas:
+            self.archivoPrincipal = principales
+            self.archivoAdicional = adicionales
+            self.mapas = mapas
+            self.comenzarAnalisis()
 
     def mostrarResultados(self):
         self.ventanaResultados = ResultadosWindow()
