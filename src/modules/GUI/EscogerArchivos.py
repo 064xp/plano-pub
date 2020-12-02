@@ -54,5 +54,5 @@ class EscogerArchivos(qtw.QWidget, Ui_ArchivosForm):
         return fileName
 
     def comenzar(self):
-        if not self.datosAdicionales and not self.datosPrincipales and not self.mapas:
+        if not (self.datosAdicionales and self.datosPrincipales and self.mapas):
             DialogoAlerta('Escoge Archivos', 'Favor de escoger los archivos')

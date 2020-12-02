@@ -3,9 +3,9 @@ class Grupo:
         self.alumnos = alumnos
         self.materia = materia
         self.horario = {
-        'lunes' : [],
-        'martes' : [],
-        'miercoles' : [],
-        'jueves' : [],
-        'viernes' : []
+            'lunes' : [],
+            'martes' : [],
+            'miercoles' : [],
+            'jueves' : [],
+            'viernes' : []
         }
