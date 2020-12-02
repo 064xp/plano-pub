@@ -11,9 +11,9 @@ from modules.GUI.DialogoAlerta import DialogoAlerta
 
 class Main:
     def __init__(self):
-        self.archivoPrincipal = '../testData/datosPrincipales.xlsx'
-        self.archivoAdicional = '../testData/datosAdicionales.xlsx'
-        self.mapas = '../testData/mapasCurriculares.xlsx'
+        self.archivoPrincipal = '../datosPredeterminados/datosPrincipales.xlsx'
+        self.archivoAdicional = '../datosPredeterminados/datosAdicionales.xlsx'
+        self.mapas = '../datosPredeterminados/mapasCurriculares.xlsx'
         self.ventanaResultados = None
         self.ventanaEscogerArchivos = EscogerArchivos(self.archivoPrincipal, self.archivoAdicional, self.mapas)
         self.ventanaEscogerArchivos.btnComenzar.clicked.connect(self.setArchivos)
