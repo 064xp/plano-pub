@@ -1,6 +1,6 @@
 from modules.definiciones.Grupo import Grupo
 
-class Asignador:
+class AsignadorGrupos:
     def __init__(self, alumnos, programas, materias, minAlumnos = 10, maxAlumnos=26):
         self.alumnos = alumnos
         self.programas = programas
