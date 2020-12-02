@@ -11,8 +11,7 @@ from modules.GUI.DialogoAlerta import DialogoAlerta
 
 class Main:
     def __init__(self):
-        # self.archivoPrincipal = '../testData/datosPrincipales.xlsx'
-        self.archivoPrincipal = ''
+        self.archivoPrincipal = '../testData/datosPrincipales.xlsx'
         self.archivoAdicional = '../testData/datosAdicionales.xlsx'
         self.mapas = '../testData/mapasCurriculares.xlsx'
         self.ventanaResultados = None

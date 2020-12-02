@@ -10,6 +10,8 @@ class EscogerArchivos(qtw.QWidget, Ui_ArchivosForm):
     def __init__(self, principales, adicionales, mapas):
         super().__init__()
         self.setupUi(self)
+        self.setWindowTitle('Escoger Archivos')
+
         self.datosPrincipales = principales
         self.datosAdicionales = adicionales
         self.mapas = mapas
@@ -34,19 +36,23 @@ class EscogerArchivos(qtw.QWidget, Ui_ArchivosForm):
         self.show()
 
     def setDatosPrincipales(self):
-        self.labelPrincipal.setVisible(True)
         self.datosPrincipales = self.obtenerArchivo()[0]
         self.labelPrincipal.setText(self.datosPrincipales)
+        if self.datosPrincipales:
+            self.labelPrincipal.setVisible(True)
+
 
     def setDatosAdicionales(self):
-        self.labelAdicional.setVisible(True)
         self.datosAdicionales = self.obtenerArchivo()[0]
         self.labelAdicional.setText(self.datosAdicionales)
+        if self.datosAdicionales:
+            self.labelAdicional.setVisible(True)
 
     def setMapas(self):
-        self.labelMapas.setVisible(False)
         self.mapas = self.obtenerArchivo()[0]
         self.labelMapas.setText(self.mapas)
+        if self.mapas:
+            self.labelMapas.setVisible(True)
 
     def obtenerArchivo(self):
         fileName = qtw.QFileDialog.getOpenFileName(self,
