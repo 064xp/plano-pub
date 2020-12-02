@@ -70,7 +70,7 @@ class Lector:
                     info = ayuda.normalizar(celda.value).split('#')
                     materia = {
                         'cuatri': cuatri,
-                        'horasPorSemana': info[1],
+                        'horasPorSemana': int(info[1]),
                         'tieneLab': True if len(info) == 3 else False
                     }
                     materias[ayuda.normalizar(info[0])] = materia
@@ -184,7 +184,7 @@ class Lector:
             except:
                 info = {
                     'cuatri': 1,
-                    'horasPorSemana': 0,
+                    'horasPorSemana': 5,
                     'tieneLab': False
                 }
                 print(f'[!] No se pudo encontrar {programa}-{nombreMateria} en mapas curriculares')
