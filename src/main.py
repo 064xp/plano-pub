@@ -29,9 +29,9 @@ class Main:
         self.programas = l.extraerProgramas()
         l.cerrarArchivos()
 
-        asignador = Asignador(self.alumnos, self.programas, self.materias)
-        asignador.crearGrupos()
-        
+        asignadorG = AsignadorGrupos(self.alumnos, self.programas, self.materias)
+        asignadorG.crearGrupos()
+
         asignadorH = AsignadorHorarios(self.materias, 7, 10)
         asignadorH.asignar()
 
@@ -46,7 +46,7 @@ class Main:
             self.archivoAdicional = adicionales
             self.mapas = mapas
             self.comenzarAnalisis()
-            
+
     def mostrarResultados(self):
         self.ventanaResultados = ResultadosWindow()
         self.ventanaEscogerArchivos.close()
