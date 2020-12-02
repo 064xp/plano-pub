@@ -2,7 +2,8 @@ import sys
 from PyQt5 import QtWidgets as qtw
 
 from modules.lectorExcel import Lector
-from modules.asignador import Asignador
+from modules.asignadorGrupos import AsignadorGrupos
+from modules.asignadorHorarios import AsignadorHorarios
 
 from modules.GUI.EscogerArchivos import EscogerArchivos
 from modules.GUI.Resultados import ResultadosWindow
@@ -18,9 +19,6 @@ class Main:
         self.ventanaEscogerArchivos.btnComenzar.clicked.connect(self.setArchivos)
 
     def comenzarAnalisis(self):
-        print(self.archivoPrincipal)
-        print(self.archivoAdicional)
-        print(self.mapas)
         try:
             l = Lector(self.archivoPrincipal, self.archivoAdicional, self.mapas)
         except:
@@ -33,6 +31,9 @@ class Main:
 
         asignador = Asignador(self.alumnos, self.programas, self.materias)
         asignador.crearGrupos()
+        
+        asignadorH = AsignadorHorarios(self.materias, 7, 10)
+        asignadorH.asignar()
 
         self.mostrarResultados()
 
@@ -45,7 +46,7 @@ class Main:
             self.archivoAdicional = adicionales
             self.mapas = mapas
             self.comenzarAnalisis()
-
+            
     def mostrarResultados(self):
         self.ventanaResultados = ResultadosWindow()
         self.ventanaEscogerArchivos.close()
