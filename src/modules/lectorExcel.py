@@ -12,6 +12,10 @@ class Lector:
         self._mapas = self.cargarMapasCurriculares(mapasCurriculares)
         self._prerequisitos = self.extraerPrerequisitos()
 
+    def cerrarArchivos(self):
+        self._wbPrincipal.close()
+        self._wbAdicional.close()
+
     def extraerPrerequisitos(self):
         prerequisitos = {}
         try:
@@ -75,6 +79,7 @@ class Lector:
                     }
                     materias[ayuda.normalizar(info[0])] = materia
             mapas[programa] = materias
+            wb.close()
         return mapas
 
     def extraerMaterias(self):
