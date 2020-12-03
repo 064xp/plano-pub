@@ -18,6 +18,9 @@ class AsignadorHorarios:
                 horasPorSemana = materia.horasPorSemana
                 diaActual = 0
                 horaSugerida = self.primeraHora
+                #Si tiene lab, necesitamos saber si ya le asignamos las 2 hrs de lab
+                asignoLab = False
+
                 while horasPorSemana > 0:
                     diaStr = dias[diaActual]
                     if not self.existeHorarioEn(diaStr,horaSugerida):
@@ -26,8 +29,17 @@ class AsignadorHorarios:
                     else:
                         while self.hayConflicto(diaStr, horaSugerida, grupo):
                             horaSugerida+=1
-                        self.agregarHorario(grupo, diaStr, horaSugerida)
-                        horasPorSemana-=1
+
+                        if materia.tieneLab and not asignoLab:
+                            asignoLab = True
+                            self.agregarHorario(grupo, diaStr, horaSugerida)
+                            self.agregarHorario(grupo, diaStr, horaSugerida +1)
+                            horasPorSemana-=2
+                        else:
+                            self.agregarHorario(grupo, diaStr, horaSugerida)
+                            horasPorSemana-=1
+
+                        # turn this into a generator siguienteDia()
                         if diaActual == 4:
                             diaActual = 0
                         else:

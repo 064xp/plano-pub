@@ -9,3 +9,6 @@ class Grupo:
             'jueves' : [],
             'viernes' : []
         }
+
+    def __str__(self):
+        return str(self.horario)
