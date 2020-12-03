@@ -48,7 +48,7 @@ class Main:
             self.comenzarAnalisis()
 
     def mostrarResultados(self):
-        self.ventanaResultados = ResultadosWindow()
+        self.ventanaResultados = ResultadosWindow(self.materias)
         self.ventanaEscogerArchivos.close()
 
 app = qtw.QApplication(sys.argv)
