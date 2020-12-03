@@ -1,10 +1,12 @@
 class Alumno:
-    def __init__(self, registro, materiasPendientes, carrera, nombre = ''):
+    def __init__(self, registro, materiasPendientes, carrera):
         self._registro = registro
         self._materiasPendientes = materiasPendientes
-        self._nombre = nombre
         self._carrera = carrera
         self.materiasPorCuatri = 0
+
+    def __str__(self):
+        return f'Alumno: {self._registro} Carrera: {self._carrera}'
 
     @property
     def registro(self):

@@ -1,4 +1,5 @@
 from modules.definiciones.Grupo import Grupo
+from modules.funcionesAyuda import FuncionesAyuda as ayuda
 
 class AsignadorGrupos:
     def __init__(self, alumnos, programas, materias, minAlumnos = 10, maxAlumnos=26):
@@ -15,8 +16,9 @@ class AsignadorGrupos:
 
     def asignarMaterias(self):
         for alumno in self.alumnos:
-            materias = alumno.materiasPendientes[0:8]
-            cuatri = self.calcularCuatri(materias)
+            materias = alumno.materiasPendientes[0:9]
+            cuatri = self.calcularCuatri(materias, alumno.carrera, alumno.registro)
+
             materiasPorCuatri = self.programas[alumno.carrera].materiasPorCuatri[cuatri-1]
             alumno.materiasPorCuatri = materiasPorCuatri
             materias = alumno.materiasPendientes[0:materiasPorCuatri]
@@ -24,15 +26,14 @@ class AsignadorGrupos:
             for materia in materias:
                 materia.alumnos.append(alumno)
 
-    def calcularCuatri(self, materiasPendientes):
+    def calcularCuatri(self, materiasPendientes, programa, alumno):
         cantidad = []
-        cuatriMayor = max(materiasPendientes, key = lambda materia : materia.cuatri).cuatri
+        cuatriMayor = max(materiasPendientes, key = lambda materia : materia.cuatri[programa]).cuatri[programa]
         cantidad = [0 for i in range (cuatriMayor)]
 
         for materia in materiasPendientes:
-                cantidad[materia.cuatri-1]+=1
+                cantidad[materia.cuatri[programa]-1]+=1
 
-        materia.cuatri
         cuatri = cantidad.index(max(cantidad))
         return cuatri+1
 
@@ -48,7 +49,7 @@ class AsignadorGrupos:
 
             for alumno in self.alumnos:
                 if (materia in alumno.materiasPendientes
-                    and materia.prerequisito not in alumno.materiasPendientes
+                    and self.cumpleConPrerequisitos(alumno, materia)
                     and alumno.materiasPorCuatri > 0):
                     materia.alumnos.append(alumno)
             self.crearGruposDeMateria(materia)
@@ -67,3 +68,9 @@ class AsignadorGrupos:
             for alumno in grupo.alumnos:
                 alumno.materiasPendientes.remove(materia)
                 alumno.materiasPorCuatri -= 1
+
+    def cumpleConPrerequisitos(self, alumno, materia):
+        for materiaPendiente in alumno.materiasPendientes:
+            if materia.prerequisito == ayuda.normalizar(materiaPendiente.nombre):
+                return False
+        return True

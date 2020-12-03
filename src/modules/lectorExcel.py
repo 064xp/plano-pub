@@ -17,6 +17,13 @@ class Lector:
         self._wbAdicional.close()
 
     def extraerPrerequisitos(self):
+        '''
+        Extrae prerequisitos, regresa un diccionario
+        con claves con nombres de programa, que a su vez son
+        diccionarios con las materias dentro, siendo la llave el
+        nombre de la materia normalizado y el valor el nombre normalizado
+        del prerequisito
+        '''
         prerequisitos = {}
         try:
             ws = self._wbAdicional['Prerequisitos']
@@ -33,7 +40,7 @@ class Lector:
                 if not programa in prerequisitos:
                     prerequisitos[programa] = {}
 
-                prerequisitos[programa][materia.upper()] = prerequisito
+                prerequisitos[programa][ayuda.normalizar(materia)] = ayuda.normalizar(prerequisito)
         return prerequisitos
 
     def extraerCantidadMaterias(self, programa):
@@ -73,7 +80,9 @@ class Lector:
                         break
                     info = ayuda.normalizar(celda.value).split('#')
                     materia = {
-                        'cuatri': cuatri,
+                        'cuatri':{
+                            programa: cuatri
+                        },
                         'horasPorSemana': int(info[1]),
                         'tieneLab': True if len(info) == 3 else False
                     }
@@ -96,10 +105,15 @@ class Lector:
 
             # Checar si hay materias duplicadas
             # Si si hay, nos quedamos con la original y le agregamos el programa nuevo
+            # y el cuatri de ese programa
             # a la lista de programas
             for materiaP in dict(materiasPrograma).keys():
                 if materiaP in materias:
+                    programa = materiasPrograma[materiaP].programas[0]
+                    info = self.buscarMateriaEnMapas(materiasPrograma[materiaP].nombre, programa)
+
                     materias[materiaP].programas.extend(materiasPrograma[materiaP].programas)
+                    materias[materiaP].agregarCuatri(programa, info['cuatri'])
                     materiasPrograma.pop(materiaP)
             materias.update(materiasPrograma)
         return materias
@@ -180,21 +194,28 @@ class Lector:
                 break
 
             try:
-                prerequisito = prerequisitos[programa][nombreClase.upper()]
+                prerequisito = prerequisitos[programa][ayuda.normalizar(nombreMateria)]
             except:
                 prerequisito = None
 
-            try:
-                info = self._mapas[programa][ayuda.normalizar(nombreMateria)]
-            except:
-                info = {
-                    'cuatri': 1,
-                    'horasPorSemana': 5,
-                    'tieneLab': False
-                }
-                print(f'[!] No se pudo encontrar {programa}-{nombreMateria} en mapas curriculares')
+            info = self.buscarMateriaEnMapas(nombreMateria, programa)
 
             materias[ayuda.normalizar(nombreMateria)] = \
-                Materia(nombreMateria, ws.title, info['cuatri'], info['horasPorSemana'], info['tieneLab'], prerequisito)
-
+                Materia(nombreMateria, programa, info['cuatri'], info['horasPorSemana'], info['tieneLab'], prerequisito)
         return materias
+
+    def buscarMateriaEnMapas(self, nombreMateria, programa):
+        valorDefault = {
+            'cuatri': {
+                programa: 1
+            },
+            'horasPorSemana': 5,
+            'tieneLab': False
+        }
+        try:
+            info = self._mapas[programa][ayuda.normalizar(nombreMateria)]
+        except:
+            print(f'[!] No se pudo encontrar {programa}-{nombreMateria} en mapas curriculares')
+            info = valorDefault
+
+        return info

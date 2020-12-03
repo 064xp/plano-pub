@@ -9,6 +9,14 @@ class Materia:
         self._horasPorSemana = horasPorSemana
         self._tieneLab = tieneLab
 
+    def __str__(self):
+        cuatri = ''
+        for programa in self._cuatri:
+            cuatri += f'{programa}: {self._cuatri[programa]} '
+        return f'Materia: {self.nombre} | Cuatris: {cuatri} |\
+tiene lab: {self._tieneLab} | grupos: {len(self._grupos)}| \
+hora/semana: {self._horasPorSemana}'
+
     @property
     def prerequisito(self):
         return self._prerequisito
@@ -24,6 +32,9 @@ class Materia:
     @property
     def cuatri(self):
         return self._cuatri
+
+    def agregarCuatri(self, programa, cuatri):
+        self._cuatri[programa] = cuatri[programa]
 
     @property
     def programas(self):
