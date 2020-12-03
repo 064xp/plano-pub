@@ -14,15 +14,14 @@ class AsignadorHorarios:
     def asignar (self):
         for materia in self.materias.values():
             for grupo in materia.grupos:
-                dias = ['lunes', 'martes', 'miercoles', 'jueves', 'viernes']
+                dias = self.diasSemana()
                 horasPorSemana = materia.horasPorSemana
-                diaActual = 0
                 horaSugerida = self.primeraHora
                 #Si tiene lab, necesitamos saber si ya le asignamos las 2 hrs de lab
                 asignoLab = False
 
                 while horasPorSemana > 0:
-                    diaStr = dias[diaActual]
+                    diaStr = next(dias)
                     if not self.existeHorarioEn(diaStr,horaSugerida):
                         self.tblHorarios[diaStr][str(horaSugerida)] = []
                         self.agregarHorario(grupo, diaStr, horaSugerida)
@@ -39,11 +38,6 @@ class AsignadorHorarios:
                             self.agregarHorario(grupo, diaStr, horaSugerida)
                             horasPorSemana-=1
 
-                        # turn this into a generator siguienteDia()
-                        if diaActual == 4:
-                            diaActual = 0
-                        else:
-                            diaActual+=1
                         horaSugerida = self.primeraHora
 
     def existeHorarioEn (self, dia, hora):
@@ -69,3 +63,12 @@ class AsignadorHorarios:
                 if alumno in grupoExistente.alumnos:
                     return True
         return False
+
+    def diasSemana(self):
+        dias = ['lunes', 'martes', 'miercoles', 'jueves', 'viernes']
+        actual = 0
+        while True:
+            if actual == 5:
+                actual = 0
+            yield dias[actual]
+            actual += 1
