@@ -5,14 +5,40 @@ class GruposItem(qtg.QStandardItem):
         super().__init__()
         self.grupo = grupo
         self.setEditable(False)
-        self.setText(f'Grupo de {self.grupo.materia}')
+        self.setText(f'{self.grupo.materia}')
+        self.tituloAlumnos = TituloItem(f'Alumnos ({len(self.grupo.alumnos)})')
+        self.appendRow(self.tituloAlumnos)
 
         for alumno in self.grupo.alumnos:
-            self.appendRow(AlumnosItem(alumno))
+            self.tituloAlumnos.appendRow(AlumnosItem(alumno, []))
+
+        self.tituloHorarios = TituloItem('Horario')
+        self.appendRow(self.tituloHorarios)
+        for dia in self.grupo.horario:
+            horas = [str(hr) for hr in self.grupo.horario[dia]]
+            horasStr =  ', '.join(horas)
+            self.tituloHorarios.appendRow(TituloItem(f'{dia.title()}:  {horasStr}'))
 
 class AlumnosItem(qtg.QStandardItem):
-    def __init__(self, alumno):
+    def __init__(self, alumno, grupos):
         super().__init__()
         self.alumno = alumno
+        self.grupos = grupos
         self.setEditable(False)
-        self.setText(f'Alumno: {self.alumno.registro}')
+        self.setText(f'Alumno: {self.alumno.registro} ({self.alumno.carrera})\
+        Cuatri: {self.alumno.cuatri}\
+        Materias: {len(self.grupos)}\
+        ')
+
+        if len(self.grupos) > 0:
+            self.tituloGrupos = TituloItem('Grupos')
+            self.appendRow(self.tituloGrupos)
+
+            for grupo in self.grupos:
+                self.tituloGrupos.appendRow(GruposItem(grupo))
+
+class TituloItem(qtg.QStandardItem):
+    def __init__(self, titulo):
+        super().__init__()
+        self.setEditable(False)
+        self.setText(titulo)

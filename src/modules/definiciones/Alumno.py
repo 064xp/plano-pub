@@ -4,6 +4,7 @@ class Alumno:
         self._materiasPendientes = materiasPendientes
         self._carrera = carrera
         self.materiasPorCuatri = 0
+        self.cuatri = 1
 
     def __str__(self):
         return f'Alumno: {self._registro} Carrera: {self._carrera}'
@@ -19,7 +20,3 @@ class Alumno:
     @property
     def carrera(self):
         return self._carrera
-
-    @property
-    def cuatri(self):
-        return self._cuatri

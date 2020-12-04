@@ -18,6 +18,7 @@ class AsignadorGrupos:
         for alumno in self.alumnos:
             materias = alumno.materiasPendientes[0:9]
             cuatri = self.calcularCuatri(materias, alumno.carrera, alumno.registro)
+            alumno.cuatri = cuatri
 
             materiasPorCuatri = self.programas[alumno.carrera].materiasPorCuatri[cuatri-1]
             alumno.materiasPorCuatri = materiasPorCuatri
