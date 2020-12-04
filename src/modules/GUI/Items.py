@@ -5,9 +5,13 @@ class GruposItem(qtg.QStandardItem):
         super().__init__()
         self.grupo = grupo
         self.setEditable(False)
-        self.setText(f'{self.grupo.materia}')
+        self.setText(f'{self.grupo.materia} (Grupo {self.grupo.id})')
         self.tituloAlumnos = TituloItem(f'Alumnos ({len(self.grupo.alumnos)})')
         self.appendRow(self.tituloAlumnos)
+
+        preview = [str(alumno.registro) for alumno in grupo.alumnos]
+        preview = ', '.join(preview)
+        self.appendColumn([TituloItem('test')])
 
         for alumno in self.grupo.alumnos:
             self.tituloAlumnos.appendRow(AlumnosItem(alumno, []))
@@ -25,10 +29,10 @@ class AlumnosItem(qtg.QStandardItem):
         self.alumno = alumno
         self.grupos = grupos
         self.setEditable(False)
-        self.setText(f'Alumno: {self.alumno.registro} ({self.alumno.carrera})\
-        Cuatri: {self.alumno.cuatri}\
-        Materias: {len(self.grupos)}\
-        ')
+        self.setText(f'Alumno: {self.alumno.registro}'\
+        f'({self.alumno.carrera})\t'\
+        f'Cuatri: {self.alumno.cuatri}\t'\
+        f'Materias: {len(self.grupos)}\t')
 
         if len(self.grupos) > 0:
             self.tituloGrupos = TituloItem('Grupos')

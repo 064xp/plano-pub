@@ -15,15 +15,14 @@ class ResultadosWindow(qtw.QMainWindow, Ui_ResultadosForm):
         self.show()
 
         modeloGrupos = self.crearModeloGrupos()
+        modeloGrupos.setHorizontalHeaderLabels(['Grupo'])
         self.GruposTreeView.setModel(modeloGrupos)
-        self.GruposTreeView.setHeaderHidden(True)
         self.GruposTreeView.setAnimated(True)
         # self.GruposTreeView.setDragDropMode(qtw.QAbstractItemView.InternalMove)
-        self.GruposTreeView.setAutoScroll(True)
 
         modeloAlumnos = self.crearModeloAlumnos()
+        modeloAlumnos.setHorizontalHeaderLabels(['Alumno'])
         self.AlumnosTreeView.setModel(modeloAlumnos)
-        self.AlumnosTreeView.setHeaderHidden(True)
         self.AlumnosTreeView.setAnimated(True)
         self.GruposTreeView.setAutoScroll(True)
 
