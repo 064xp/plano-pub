@@ -20,25 +20,25 @@ class AsignadorHorarios:
                 #Si tiene lab, necesitamos saber si ya le asignamos las 2 hrs de lab
                 asignoLab = False
 
+
                 while horasPorSemana > 0:
                     diaStr = next(dias)
                     if not self.existeHorarioEn(diaStr,horaSugerida):
                         self.tblHorarios[diaStr][str(horaSugerida)] = []
+
+                    while self.hayConflicto(diaStr, horaSugerida, grupo):
+                        horaSugerida+=1
+
+                    if materia.tieneLab and not asignoLab:
+                        asignoLab = True
                         self.agregarHorario(grupo, diaStr, horaSugerida)
+                        self.agregarHorario(grupo, diaStr, horaSugerida +1)
+                        horasPorSemana-=2
                     else:
-                        while self.hayConflicto(diaStr, horaSugerida, grupo):
-                            horaSugerida+=1
+                        self.agregarHorario(grupo, diaStr, horaSugerida)
+                        horasPorSemana-=1
 
-                        if materia.tieneLab and not asignoLab:
-                            asignoLab = True
-                            self.agregarHorario(grupo, diaStr, horaSugerida)
-                            self.agregarHorario(grupo, diaStr, horaSugerida +1)
-                            horasPorSemana-=2
-                        else:
-                            self.agregarHorario(grupo, diaStr, horaSugerida)
-                            horasPorSemana-=1
-
-                        horaSugerida = self.primeraHora
+                    horaSugerida = self.primeraHora
 
     def existeHorarioEn (self, dia, hora):
         try:
