@@ -86,8 +86,12 @@ class BaseDatos:
 
             CREATE TABLE IF NOT EXISTS Grupos(
                 idGrupo int,
-                registro int,
                 idMateria int
+            );
+
+            CREATE TABLE IF NOT EXISTS AlumnoGrupo(
+                idGrupo int,
+                registro int,
             );
 
             CREATE TABLE IF NOT EXISTS Horario(

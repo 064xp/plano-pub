@@ -68,7 +68,6 @@ class Main:
             self.dbFile =  qtw.QFileDialog.getSaveFileName(self.ventanaResultados, 'Guardar Archivo',
                 f'../{nombreDefault}', "Horario (*.hr)")[0]
 
-            print(self.dbFile)
             try:
                 self.db = BaseDatos(self.dbFile)
             except:
