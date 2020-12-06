@@ -3,8 +3,8 @@ from PyQt5 import QtWidgets as qtw
 from PyQt5 import QtCore as qtc
 from PyQt5 import QtGui as qtg
 
-from modules.GUI.UIBase.ArchivosForm import Ui_ArchivosForm
-from modules.GUI.modulosUI.DialogoAlerta import DialogoAlerta
+from modules.GUI.modulosUI.ArchivosForm import Ui_ArchivosForm
+from modules.GUI.DialogoAlerta import DialogoAlerta
 
 class EscogerArchivos(qtw.QWidget, Ui_ArchivosForm):
     def __init__(self, principales, adicionales, mapas):

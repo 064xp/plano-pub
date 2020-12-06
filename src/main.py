@@ -7,9 +7,9 @@ from modules.asignadorGrupos import AsignadorGrupos
 from modules.asignadorHorarios import AsignadorHorarios
 from modules.baseDatos import BaseDatos
 
-from modules.GUI.ventanas.EscogerArchivos import EscogerArchivos
-from modules.GUI.ventanas.Resultados import ResultadosWindow
-from modules.GUI.modulosUI.DialogoAlerta import DialogoAlerta
+from modules.GUI.EscogerArchivos import EscogerArchivos
+from modules.GUI.Resultados import ResultadosWindow
+from modules.GUI.DialogoAlerta import DialogoAlerta
 
 class Main:
     def __init__(self):

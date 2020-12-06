@@ -1,9 +1,9 @@
 from PyQt5 import QtWidgets as qtw
 from PyQt5 import QtCore as qtc
 from PyQt5 import QtGui as qtg
-from modules.GUI.modulosUI.Items import *
+from modules.GUI.Items import *
 
-from modules.GUI.UIBase.ResultadosForm import Ui_ResultadosForm
+from modules.GUI.modulosUI.ResultadosForm import Ui_ResultadosForm
 
 class ResultadosWindow(qtw.QMainWindow, Ui_ResultadosForm):
     def __init__(self, materias, archivo, alumnos):
