@@ -5,7 +5,6 @@ from PyQt5 import QtWidgets as qtw
 from modules.lectorExcel import Lector
 from modules.asignadorGrupos import AsignadorGrupos
 from modules.asignadorHorarios import AsignadorHorarios
-from modules.baseDatos import BaseDatos
 
 from modules.GUI.EscogerArchivos import EscogerArchivos
 from modules.GUI.Resultados import ResultadosWindow
@@ -17,7 +16,6 @@ class Main:
         self.archivoAdicional = '../datosPredeterminados/datosAdicionales.xlsx'
         self.mapas = '../datosPredeterminados/mapasCurriculares.xlsx'
         self.dbFile = ''
-        self.db = None
         self.ventanaResultados = None
         self.ventanaEscogerArchivos = EscogerArchivos(self.archivoPrincipal, self.archivoAdicional, self.mapas)
         self.ventanaEscogerArchivos.btnComenzar.clicked.connect(self.setArchivos)
@@ -67,20 +65,6 @@ class Main:
 
             self.dbFile =  qtw.QFileDialog.getSaveFileName(self.ventanaResultados, 'Guardar Archivo',
                 f'../{nombreDefault}', "Horario (*.hr)")[0]
-
-            try:
-                self.db = BaseDatos(self.dbFile)
-            except:
-                DialogoAlerta('Error al Guardar', 'No se pudo crear el archivo')
-                return
-
-        for materia in self.materias.values():
-            self.db.insertarMateria(materia, self.materias)
-            for grupo in materia.grupos:
-                self.db.insertarGrupo(grupo)
-
-        for alumno in self.alumnos:
-            self.db.insertarAlumno(alumno)
 
 app = qtw.QApplication(sys.argv)
 main = Main()
