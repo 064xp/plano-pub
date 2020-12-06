@@ -5,6 +5,7 @@ from PyQt5 import QtWidgets as qtw
 from modules.lectorExcel import Lector
 from modules.asignadorGrupos import AsignadorGrupos
 from modules.asignadorHorarios import AsignadorHorarios
+from modules.exportador import Exportador
 
 from modules.GUI.EscogerArchivos import EscogerArchivos
 from modules.GUI.Resultados import ResultadosWindow
@@ -15,7 +16,7 @@ class Main:
         self.archivoPrincipal = '../datosPredeterminados/datosPrincipales.xlsx'
         self.archivoAdicional = '../datosPredeterminados/datosAdicionales.xlsx'
         self.mapas = '../datosPredeterminados/mapasCurriculares.xlsx'
-        self.dbFile = ''
+        self.archivoGuardar = ''
         self.ventanaResultados = None
         self.ventanaEscogerArchivos = EscogerArchivos(self.archivoPrincipal, self.archivoAdicional, self.mapas)
         self.ventanaEscogerArchivos.btnComenzar.clicked.connect(self.setArchivos)
@@ -56,16 +57,18 @@ class Main:
 
     def guardar(self):
         # Si aun no ha guardado
-        if not self.dbFile:
+        if not self.archivoGuardar:
             try:
                 p = re.compile(r'[\\\/]([a-z]+).xlsx', re.IGNORECASE)
                 nombreDefault = p.search(self.archivoPrincipal).group(1) + '.hr'
             except:
                 nombreDefault = 'Horario.hr'
 
-            self.dbFile =  qtw.QFileDialog.getSaveFileName(self.ventanaResultados, 'Guardar Archivo',
+            self.archivoGuardar =  qtw.QFileDialog.getSaveFileName(self.ventanaResultados, 'Guardar Archivo',
                 f'../{nombreDefault}', "Horario (*.hr)")[0]
 
+        exportador = Exportador(self.archivoGuardar)
+        exportador.guardar(self.materias, self.alumnos, self.programas)
 
 app = qtw.QApplication(sys.argv)
 main = Main()

@@ -25,7 +25,7 @@ class Materia:
             'cuatri': [(carrera, self.cuatri[carrera]) for carrera in self.cuatri],
             'prerequisito': self.prerequisito,
             'alumnos': [alumno.registro for alumno in self.alumnos],
-            'grupos': [grupo.id for grupo in self.grupos],
+            'grupos': [grupo.aDict() for grupo in self.grupos],
             'horasPorSemana': self.horasPorSemana,
             'tieneLab': self.tieneLab,
             'id': self.id

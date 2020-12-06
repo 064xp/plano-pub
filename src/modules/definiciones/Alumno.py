@@ -12,7 +12,7 @@ class Alumno:
     def aDict(self):
         return {
             'registro': self.registro,
-            'materiasPendientes': [materia.aDict() for materi in self.materiasPendientes],
+            'materiasPendientes': [materia.aDict() for materia in self.materiasPendientes],
             'carrera': self.carrera,
             'materiasPorCuatri': self.materiasPorCuatri,
             'cuatri': self.cuatri
