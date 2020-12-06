@@ -19,10 +19,10 @@ class Materia:
         f'hora/semana: {self._horasPorSemana}'
 
     def aDict(self):
-        return {
+        out = {
             'nombre': self.nombre,
             'programas': [programa for programa in self.programas],
-            'cuatri': [(carrera, self.cuatri[carrera]) for carrera in self.cuatri],
+            'cuatri': {},
             'prerequisito': self.prerequisito,
             'alumnos': [alumno.registro for alumno in self.alumnos],
             'grupos': [grupo.aDict() for grupo in self.grupos],
@@ -30,6 +30,9 @@ class Materia:
             'tieneLab': self.tieneLab,
             'id': self.id
         }
+        for carrera in self.cuatri:
+            out['cuatri'][carrera] = self.cuatri[carrera]
+        return out
 
     @property
     def prerequisito(self):
