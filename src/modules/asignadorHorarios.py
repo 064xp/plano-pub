@@ -20,7 +20,6 @@ class AsignadorHorarios:
                 #Si tiene lab, necesitamos saber si ya le asignamos las 2 hrs de lab
                 asignoLab = False
 
-
                 while horasPorSemana > 0:
                     diaStr = next(dias)
                     if not self.existeHorarioEn(diaStr,horaSugerida):

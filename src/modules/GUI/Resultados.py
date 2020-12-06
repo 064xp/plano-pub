@@ -14,17 +14,28 @@ class ResultadosWindow(qtw.QMainWindow, Ui_ResultadosForm):
         self.setWindowTitle(f'Resultados {archivo}')
         self.show()
 
+        # Tree view Grupos
         modeloGrupos = self.crearModeloGrupos()
-        modeloGrupos.setHorizontalHeaderLabels(['Grupo'])
+        modeloGrupos.setHorizontalHeaderLabels(['Grupos'])
         self.GruposTreeView.setModel(modeloGrupos)
         self.GruposTreeView.setAnimated(True)
         # self.GruposTreeView.setDragDropMode(qtw.QAbstractItemView.InternalMove)
 
+        # Tree view Alumnos
         modeloAlumnos = self.crearModeloAlumnos()
-        modeloAlumnos.setHorizontalHeaderLabels(['Alumno'])
+        modeloAlumnos.setHorizontalHeaderLabels(['Alumnos'])
         self.AlumnosTreeView.setModel(modeloAlumnos)
         self.AlumnosTreeView.setAnimated(True)
         self.GruposTreeView.setAutoScroll(True)
+
+        # Tree view materias
+        modeloMaterias = self.crearModeloMaterias()
+        modeloMaterias.setHorizontalHeaderLabels(['Materias'])
+        self.materiasProxyModel = ProxyModelMaterias()
+        self.materiasProxyModel.setSourceModel(modeloMaterias)
+        self.MateriasTreeView.setModel(self.materiasProxyModel)
+        self.MateriasTreeView.setAnimated(True)
+        self.MateriasTreeView.setAutoScroll(True)
 
     def crearModeloGrupos(self):
         modelo = qtg.QStandardItemModel()
@@ -45,6 +56,16 @@ class ResultadosWindow(qtw.QMainWindow, Ui_ResultadosForm):
         for alumno in self.alumnos:
             grupos = self.gruposDeAlumno(alumno)
             filas.append(AlumnosItem(alumno, grupos))
+        root.appendRows(filas)
+        return modelo
+
+    def crearModeloMaterias(self):
+        modelo = qtg.QStandardItemModel()
+        root = modelo.invisibleRootItem()
+        filas = []
+
+        for materia in self.materias.values():
+            filas.append(MateriaItem(materia))
         root.appendRows(filas)
         return modelo
 
