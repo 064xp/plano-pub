@@ -204,7 +204,7 @@ class Lector:
             materias[ayuda.normalizar(nombreMateria)] = \
                 Materia(nombreMateria, idActual, programa, info['cuatri'], info['horasPorSemana'], info['tieneLab'], prerequisito)
             idActual += 1
-            
+
         return materias
 
     def buscarMateriaEnMapas(self, nombreMateria, programa):

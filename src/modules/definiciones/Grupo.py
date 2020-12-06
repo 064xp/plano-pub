@@ -13,3 +13,11 @@ class Grupo:
 
     def __str__(self):
         return str(self.horario)
+
+    def aDict(self):
+        return {
+            'alumnos': [alumno.registro for alumno in self.alumnos],
+            'materia': self.materia.id,
+            'id': self.id,
+            'horario': self.horario
+        }

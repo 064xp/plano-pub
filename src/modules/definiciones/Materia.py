@@ -18,6 +18,19 @@ class Materia:
         f'tiene lab: {self._tieneLab} | grupos: {len(self._grupos)}| '\
         f'hora/semana: {self._horasPorSemana}'
 
+    def aDict(self):
+        return {
+            'nombre': self.nombre,
+            'programas': [programa for programa in self.programas],
+            'cuatri': [(carrera, self.cuatri[carrera]) for carrera in self.cuatri],
+            'prerequisito': self.prerequisito,
+            'alumnos': [alumno.registro for alumno in self.alumnos],
+            'grupos': [grupo.id for grupo in self.grupos],
+            'horasPorSemana': self.horasPorSemana,
+            'tieneLab': self.tieneLab,
+            'id': self.id
+        }
+
     @property
     def prerequisito(self):
         return self._prerequisito
@@ -25,7 +38,7 @@ class Materia:
     @property
     def id(self):
         return self._id
-        
+
     @property
     def nombre(self):
         return self._nombre

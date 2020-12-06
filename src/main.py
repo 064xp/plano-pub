@@ -66,6 +66,7 @@ class Main:
             self.dbFile =  qtw.QFileDialog.getSaveFileName(self.ventanaResultados, 'Guardar Archivo',
                 f'../{nombreDefault}', "Horario (*.hr)")[0]
 
+
 app = qtw.QApplication(sys.argv)
 main = Main()
 sys.exit(app.exec_())
