@@ -61,7 +61,7 @@ class AsignadorGrupos:
         while len(materia.alumnos) >= self.minAlumnos:
             alumnosGrupo = materia.alumnos[:self.maxAlumnos]
             materia.alumnos = materia.alumnos[self.maxAlumnos:]
-            grupos.append(Grupo(alumnosGrupo, materia.nombre, self.grupoActual))
+            grupos.append(Grupo(alumnosGrupo, materia, self.grupoActual))
             self.grupoActual += 1
         materia.grupos.extend(grupos)
         self.quitarAlumnosAsignados(grupos, materia)

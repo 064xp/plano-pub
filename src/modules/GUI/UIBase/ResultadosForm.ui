@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>802</width>
+    <width>803</width>
     <height>600</height>
    </rect>
   </property>
@@ -77,7 +77,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>802</width>
+     <width>803</width>
      <height>25</height>
     </rect>
    </property>
@@ -85,6 +85,7 @@
     <property name="title">
      <string>Archivo</string>
     </property>
+    <addaction name="actionGuardar"/>
     <addaction name="actionExportar"/>
    </widget>
    <addaction name="menuArchivo"/>
@@ -100,11 +101,17 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
+   <addaction name="actionGuardar"/>
    <addaction name="actionExportar"/>
   </widget>
   <action name="actionExportar">
    <property name="text">
     <string>Exportar</string>
+   </property>
+  </action>
+  <action name="actionGuardar">
+   <property name="text">
+    <string>Guardar</string>
    </property>
   </action>
  </widget>

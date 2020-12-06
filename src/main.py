@@ -1,9 +1,11 @@
 import sys
+import re
 from PyQt5 import QtWidgets as qtw
 
 from modules.lectorExcel import Lector
 from modules.asignadorGrupos import AsignadorGrupos
 from modules.asignadorHorarios import AsignadorHorarios
+from modules.baseDatos import BaseDatos
 
 from modules.GUI.ventanas.EscogerArchivos import EscogerArchivos
 from modules.GUI.ventanas.Resultados import ResultadosWindow
@@ -14,6 +16,8 @@ class Main:
         self.archivoPrincipal = '../datosPredeterminados/datosPrincipales.xlsx'
         self.archivoAdicional = '../datosPredeterminados/datosAdicionales.xlsx'
         self.mapas = '../datosPredeterminados/mapasCurriculares.xlsx'
+        self.dbFile = ''
+        self.db = None
         self.ventanaResultados = None
         self.ventanaEscogerArchivos = EscogerArchivos(self.archivoPrincipal, self.archivoAdicional, self.mapas)
         self.ventanaEscogerArchivos.btnComenzar.clicked.connect(self.setArchivos)
@@ -49,8 +53,37 @@ class Main:
 
     def mostrarResultados(self):
         self.ventanaResultados = ResultadosWindow(self.materias, self.archivoPrincipal, self.alumnos)
+        self.ventanaResultados.actionGuardar.triggered.connect(lambda: self.guardar())
         self.ventanaEscogerArchivos.close()
+
+    def guardar(self):
+        # Si aun no ha guardado
+        if not self.dbFile:
+            try:
+                p = re.compile(r'[\\\/]([a-z]+).xlsx', re.IGNORECASE)
+                nombreDefault = p.search(self.archivoPrincipal).group(1) + '.hr'
+            except:
+                nombreDefault = 'Horario.hr'
+
+            self.dbFile =  qtw.QFileDialog.getSaveFileName(self.ventanaResultados, 'Guardar Archivo',
+                f'../{nombreDefault}', "Horario (*.hr)")[0]
+
+            print(self.dbFile)
+            try:
+                self.db = BaseDatos(self.dbFile)
+            except:
+                DialogoAlerta('Error al Guardar', 'No se pudo crear el archivo')
+                return
+
+        for materia in self.materias.values():
+            self.db.insertarMateria(materia, self.materias)
+            for grupo in materia.grupos:
+                self.db.insertarGrupo(grupo)
+
+        for alumno in self.alumnos:
+            self.db.insertarAlumno(alumno)
 
 app = qtw.QApplication(sys.argv)
 main = Main()
 sys.exit(app.exec_())
+main.db.conn.close()

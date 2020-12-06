@@ -1,5 +1,5 @@
 class Materia:
-    def __init__(self, nombre, programa, cuatri, horasPorSemana, tieneLab, prerequisito = None):
+    def __init__(self, nombre, id, programa, cuatri, horasPorSemana, tieneLab, prerequisito = None):
         self._nombre = nombre
         self._programas = [programa]
         self._cuatri = cuatri
@@ -8,19 +8,24 @@ class Materia:
         self._grupos = []
         self._horasPorSemana = horasPorSemana
         self._tieneLab = tieneLab
+        self._id = id
 
     def __str__(self):
         cuatri = ''
         for programa in self._cuatri:
             cuatri += f'{programa}: {self._cuatri[programa]} '
-        return f'Materia: {self.nombre} | Cuatris: {cuatri} |\
-tiene lab: {self._tieneLab} | grupos: {len(self._grupos)}| \
-hora/semana: {self._horasPorSemana}'
+        return f'Materia: {self.nombre} | Cuatris: {cuatri} | '\
+        f'tiene lab: {self._tieneLab} | grupos: {len(self._grupos)}| '\
+        f'hora/semana: {self._horasPorSemana}'
 
     @property
     def prerequisito(self):
         return self._prerequisito
 
+    @property
+    def id(self):
+        return self._id
+        
     @property
     def nombre(self):
         return self._nombre

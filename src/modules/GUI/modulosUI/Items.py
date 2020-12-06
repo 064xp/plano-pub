@@ -7,7 +7,7 @@ class GruposItem(qtg.QStandardItem):
         super().__init__()
         self.grupo = grupo
         self.setEditable(False)
-        self.setText(f'{self.grupo.materia} (Grupo {self.grupo.id})   [{len(self.grupo.alumnos)} Alumnos]')
+        self.setText(f'{self.grupo.materia.nombre} (Grupo {self.grupo.id})   [{len(self.grupo.alumnos)} Alumnos]')
         self.tituloAlumnos = TituloItem(f'Alumnos ({len(self.grupo.alumnos)})')
         self.appendRow(self.tituloAlumnos)
 

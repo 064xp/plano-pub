@@ -15,9 +15,9 @@ class ResultadosWindow(qtw.QMainWindow, Ui_ResultadosForm):
         self.show()
 
         # Tree view Grupos
-        modeloGrupos = self.crearModeloGrupos()
-        modeloGrupos.setHorizontalHeaderLabels(['Grupos'])
-        self.GruposTreeView.setModel(modeloGrupos)
+        self.modeloGrupos = self.crearModeloGrupos()
+        self.modeloGrupos.setHorizontalHeaderLabels(['Grupos'])
+        self.GruposTreeView.setModel(self.modeloGrupos)
         self.GruposTreeView.setAnimated(True)
         # self.GruposTreeView.setDragDropMode(qtw.QAbstractItemView.InternalMove)
 

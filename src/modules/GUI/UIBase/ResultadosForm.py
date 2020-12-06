@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_ResultadosForm(object):
     def setupUi(self, ResultadosForm):
         ResultadosForm.setObjectName("ResultadosForm")
-        ResultadosForm.resize(802, 600)
+        ResultadosForm.resize(803, 600)
         self.centralwidget = QtWidgets.QWidget(ResultadosForm)
         self.centralwidget.setObjectName("centralwidget")
         self.verticalLayout = QtWidgets.QVBoxLayout(self.centralwidget)
@@ -58,7 +58,7 @@ class Ui_ResultadosForm(object):
         self.verticalLayout.addWidget(self.tabWidget)
         ResultadosForm.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(ResultadosForm)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 802, 25))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 803, 25))
         self.menubar.setObjectName("menubar")
         self.menuArchivo = QtWidgets.QMenu(self.menubar)
         self.menuArchivo.setObjectName("menuArchivo")
@@ -71,8 +71,12 @@ class Ui_ResultadosForm(object):
         ResultadosForm.addToolBar(QtCore.Qt.TopToolBarArea, self.toolBar)
         self.actionExportar = QtWidgets.QAction(ResultadosForm)
         self.actionExportar.setObjectName("actionExportar")
+        self.actionGuardar = QtWidgets.QAction(ResultadosForm)
+        self.actionGuardar.setObjectName("actionGuardar")
+        self.menuArchivo.addAction(self.actionGuardar)
         self.menuArchivo.addAction(self.actionExportar)
         self.menubar.addAction(self.menuArchivo.menuAction())
+        self.toolBar.addAction(self.actionGuardar)
         self.toolBar.addAction(self.actionExportar)
 
         self.retranslateUi(ResultadosForm)
@@ -88,3 +92,4 @@ class Ui_ResultadosForm(object):
         self.menuArchivo.setTitle(_translate("ResultadosForm", "Archivo"))
         self.toolBar.setWindowTitle(_translate("ResultadosForm", "toolBar"))
         self.actionExportar.setText(_translate("ResultadosForm", "Exportar"))
+        self.actionGuardar.setText(_translate("ResultadosForm", "Guardar"))
