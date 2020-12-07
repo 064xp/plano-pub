@@ -86,7 +86,6 @@
      <string>Archivo</string>
     </property>
     <addaction name="actionGuardar"/>
-    <addaction name="actionExportar"/>
    </widget>
    <addaction name="menuArchivo"/>
   </widget>
@@ -102,13 +101,7 @@
     <bool>false</bool>
    </attribute>
    <addaction name="actionGuardar"/>
-   <addaction name="actionExportar"/>
   </widget>
-  <action name="actionExportar">
-   <property name="text">
-    <string>Exportar</string>
-   </property>
-  </action>
   <action name="actionGuardar">
    <property name="text">
     <string>Guardar</string>
