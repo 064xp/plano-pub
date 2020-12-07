@@ -65,6 +65,9 @@ class Main:
             self.archivoGuardar =  qtw.QFileDialog.getSaveFileName(self.ventanaResultados, 'Guardar Archivo',
                 f'../{nombreDefault}', "Horario (*.horario)")[0]
 
+            if not self.archivoGuardar:
+                return
+
         exportador = Exportador(self.archivoGuardar)
         exportador.guardar(self.materias, self.alumnos, self.programas)
 
