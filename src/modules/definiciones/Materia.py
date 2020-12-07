@@ -1,5 +1,5 @@
 class Materia:
-    def __init__(self, nombre, id, programa, cuatri, horasPorSemana, tieneLab, prerequisito = None):
+    def __init__(self, nombre, programa, cuatri, horasPorSemana, tieneLab, prerequisito = None):
         self._nombre = nombre
         self._programas = [programa]
         self._cuatri = cuatri
@@ -8,7 +8,6 @@ class Materia:
         self._grupos = []
         self._horasPorSemana = horasPorSemana
         self._tieneLab = tieneLab
-        self._id = id
 
     def __str__(self):
         cuatri = ''
@@ -28,7 +27,6 @@ class Materia:
             'grupos': [grupo.aDict() for grupo in self.grupos],
             'horasPorSemana': self.horasPorSemana,
             'tieneLab': self.tieneLab,
-            'id': self.id
         }
         for carrera in self.cuatri:
             out['cuatri'][carrera] = self.cuatri[carrera]
@@ -37,10 +35,6 @@ class Materia:
     @property
     def prerequisito(self):
         return self._prerequisito
-
-    @property
-    def id(self):
-        return self._id
 
     @property
     def nombre(self):

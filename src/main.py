@@ -60,12 +60,12 @@ class Main:
         if not self.archivoGuardar:
             try:
                 p = re.compile(r'[\\\/]([a-z]+).xlsx', re.IGNORECASE)
-                nombreDefault = p.search(self.archivoPrincipal).group(1) + '.hr'
+                nombreDefault = p.search(self.archivoPrincipal).group(1) + '.json'
             except:
-                nombreDefault = 'Horario.hr'
+                nombreDefault = 'Horario.json'
 
             self.archivoGuardar =  qtw.QFileDialog.getSaveFileName(self.ventanaResultados, 'Guardar Archivo',
-                f'../{nombreDefault}', "Horario (*.hr)")[0]
+                f'../{nombreDefault}', "Horario (*.json)")[0]
 
         exportador = Exportador(self.archivoGuardar)
         exportador.guardar(self.materias, self.alumnos, self.programas)

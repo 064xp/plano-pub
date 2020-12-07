@@ -1,3 +1,5 @@
+from modules.funcionesAyuda import FuncionesAyuda as ayuda
+
 class Grupo:
     def __init__(self, alumnos, materia, id):
         self.alumnos = alumnos
@@ -17,7 +19,7 @@ class Grupo:
     def aDict(self):
         return {
             'alumnos': [alumno.registro for alumno in self.alumnos],
-            'materia': self.materia.id,
+            'materia': ayuda.normalizar(self.materia.nombre),
             'id': self.id,
             'horario': self.horario
         }

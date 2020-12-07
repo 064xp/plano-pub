@@ -101,7 +101,7 @@ class Lector:
         materias = {}
         for hoja in self._wbPrincipal:
             ws = self._wbPrincipal[hoja.title]
-            materiasPrograma = self._extraerMateriasWS(hoja.title, self._prerequisitos, len(materias.keys()))
+            materiasPrograma = self._extraerMateriasWS(hoja.title, self._prerequisitos)
 
             # Checar si hay materias duplicadas
             # Si si hay, nos quedamos con la original y le agregamos el programa nuevo
@@ -170,14 +170,13 @@ class Lector:
                 alumnos.append(Alumno(registro, materiasPendientes, hoja.title))
         return alumnos
 
-    def _extraerMateriasWS(self, programa, prerequisitos, cantMaterias):
+    def _extraerMateriasWS(self, programa, prerequisitos):
         '''
         Extrae las materias de una hoja de Calculo
         Regresa un diccionario, las claves siendo el nombre de la materia
         los valores siendo objetos tipo Materia
         '''
         materias = {}
-        idActual = cantMaterias
         try:
             ws = self._wbPrincipal[programa]
         except:
@@ -202,8 +201,7 @@ class Lector:
             info = self.buscarMateriaEnMapas(nombreMateria, programa)
 
             materias[ayuda.normalizar(nombreMateria)] = \
-                Materia(nombreMateria, idActual, programa, info['cuatri'], info['horasPorSemana'], info['tieneLab'], prerequisito)
-            idActual += 1
+                Materia(nombreMateria, programa, info['cuatri'], info['horasPorSemana'], info['tieneLab'], prerequisito)
 
         return materias
 
