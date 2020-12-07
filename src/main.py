@@ -7,6 +7,7 @@ from modules.asignadorGrupos import AsignadorGrupos
 from modules.asignadorHorarios import AsignadorHorarios
 from modules.exportador import Exportador
 
+from modules.GUI.ventanas.Bienvenida import Bienvenida
 from modules.GUI.ventanas.EscogerArchivos import EscogerArchivos
 from modules.GUI.ventanas.Resultados import ResultadosWindow
 from modules.GUI.modulosUI.DialogoAlerta import DialogoAlerta
@@ -17,20 +18,16 @@ class Main:
         self.archivoAdicional = '../datosPredeterminados/datosAdicionales.xlsx'
         self.mapas = '../datosPredeterminados/mapasCurriculares.xlsx'
         self.archivoGuardar = ''
+
         self.ventanaResultados = None
         self.ventanaEscogerArchivos = EscogerArchivos(self.archivoPrincipal, self.archivoAdicional, self.mapas)
         self.ventanaEscogerArchivos.btnComenzar.clicked.connect(self.setArchivos)
 
-    def comenzarAnalisis(self):
-        try:
-            l = Lector(self.archivoPrincipal, self.archivoAdicional, self.mapas)
-        except:
-            DialogoAlerta('Error de Lectura', 'Hubo un error al intentar abrir los archivos')
+        self.ventanaBienvenida = Bienvenida()
+        self.ventanaBienvenida.cargar.connect(self.cargarDeArchivo)
+        self.ventanaBienvenida.nuevo.connect(lambda: self.ventanaEscogerArchivos.show())
 
-        self.materias = l.extraerMaterias()
-        self.alumnos = l.extraerAlumnos(self.materias)
-        self.programas = l.extraerProgramas()
-        l.cerrarArchivos()
+    def comenzarAnalisis(self):
 
         asignadorG = AsignadorGrupos(self.alumnos, self.programas, self.materias)
         asignadorG.crearGrupos()
@@ -48,6 +45,7 @@ class Main:
             self.archivoPrincipal = principales
             self.archivoAdicional = adicionales
             self.mapas = mapas
+            self.cargarDeExcel()
             self.comenzarAnalisis()
 
     def mostrarResultados(self):
@@ -60,15 +58,36 @@ class Main:
         if not self.archivoGuardar:
             try:
                 p = re.compile(r'[\\\/]([a-z]+).xlsx', re.IGNORECASE)
-                nombreDefault = p.search(self.archivoPrincipal).group(1) + '.json'
+                nombreDefault = p.search(self.archivoPrincipal).group(1) + '.horario'
             except:
-                nombreDefault = 'Horario.json'
+                nombreDefault = 'Horario.horario'
 
             self.archivoGuardar =  qtw.QFileDialog.getSaveFileName(self.ventanaResultados, 'Guardar Archivo',
-                f'../{nombreDefault}', "Horario (*.json)")[0]
+                f'../{nombreDefault}', "Horario (*.horario)")[0]
 
         exportador = Exportador(self.archivoGuardar)
         exportador.guardar(self.materias, self.alumnos, self.programas)
+
+    def cargarDeArchivo(self, archivo):
+        try:
+            exportador = Exportador(archivo)
+            self.materias, self.alumnos, self.programas = exportador.cargar()
+            self.ventanaBienvenida.close()
+            self.mostrarResultados()
+        except:
+            DialogoAlerta('Error de Lectura', 'Ocurrió un error al intentar leer el archivo')
+
+    def cargarDeExcel(self):
+        try:
+            l = Lector(self.archivoPrincipal, self.archivoAdicional, self.mapas)
+        except:
+            DialogoAlerta('Error de Lectura', 'Hubo un error al intentar abrir los archivos')
+
+        self.materias = l.extraerMaterias()
+        self.alumnos = l.extraerAlumnos(self.materias)
+        self.programas = l.extraerProgramas()
+        l.cerrarArchivos()
+
 
 app = qtw.QApplication(sys.argv)
 main = Main()

@@ -1,4 +1,3 @@
-import sys
 from PyQt5 import QtWidgets as qtw
 from PyQt5 import QtCore as qtc
 from PyQt5 import QtGui as qtg
@@ -32,8 +31,6 @@ class EscogerArchivos(qtw.QWidget, Ui_ArchivosForm):
             self.labelAdicional.setVisible(False)
         if not self.mapas:
             self.labelMapas.setVisible(False)
-
-        self.show()
 
     def setDatosPrincipales(self):
         self.datosPrincipales = self.obtenerArchivo()[0]

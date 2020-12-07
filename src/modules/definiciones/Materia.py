@@ -1,7 +1,7 @@
 class Materia:
-    def __init__(self, nombre, programa, cuatri, horasPorSemana, tieneLab, prerequisito = None):
+    def __init__(self, nombre, programas, cuatri, horasPorSemana, tieneLab, prerequisito = None):
         self._nombre = nombre
-        self._programas = [programa]
+        self._programas = programas
         self._cuatri = cuatri
         self._prerequisito = prerequisito
         self._alumnos = []

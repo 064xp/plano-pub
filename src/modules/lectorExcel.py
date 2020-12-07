@@ -201,7 +201,7 @@ class Lector:
             info = self.buscarMateriaEnMapas(nombreMateria, programa)
 
             materias[ayuda.normalizar(nombreMateria)] = \
-                Materia(nombreMateria, programa, info['cuatri'], info['horasPorSemana'], info['tieneLab'], prerequisito)
+                Materia(nombreMateria, [programa], info['cuatri'], info['horasPorSemana'], info['tieneLab'], prerequisito)
 
         return materias
 

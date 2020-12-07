@@ -2,6 +2,7 @@ import json
 from modules.definiciones.Materia import Materia
 from modules.definiciones.Programa import Programa
 from modules.definiciones.Alumno import Alumno
+from modules.definiciones.Grupo import Grupo
 
 class Exportador:
     def __init__(self, archivo):
@@ -35,11 +36,11 @@ class Exportador:
         for materia in load['materias']:
             m = load['materias'][materia]
             materiaActual = Materia(
-                m['nombre'], m['programa'], ['m.cuatri'],
+                m['nombre'], m['programas'], m['cuatri'],
                 m['horasPorSemana'], m['tieneLab'], m['prerequisito'],
                 )
             for grupo in m['grupos']:
-                g = Grupo(alumnos, materiaActual, grupo['id'])
+                g = Grupo(grupo['alumnos'], materiaActual, grupo['id'])
                 g.horario = grupo['horario']
                 materiaActual.grupos.append(g)
             materias[materia] = materiaActual
@@ -59,11 +60,12 @@ class Exportador:
             alumnos.append(alumnoActual)
 
         ## Poner referencias a obj alumno en grupos, no solo registro
-        for materia in materia.values():
+        for materia in materias.values():
             for grupo in materia.grupos:
                 alumnosRef = []
                 for regAlumno in grupo.alumnos:
-                    alumnosRef.append(Alumno.buscarAlumno(regAlumno, alumnos))
+                    al = Alumno.buscarAlumno(regAlumno, alumnos)
+                    alumnosRef.append(al)
                 grupo.alumnos = alumnosRef
 
         ## Cargar programas
