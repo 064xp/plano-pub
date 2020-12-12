@@ -94,5 +94,8 @@ class ResultadosWindow(qtw.QMainWindow, Ui_ResultadosForm):
         if not archivoGuardar:
             return
 
+        if archivoGuardar[:5] != '.xlsx':
+            archivoGuardar += '.xlsx'
+
         exportador = Exportador(archivoGuardar)
         exportador.exportarExcel(self.materias)
