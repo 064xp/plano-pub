@@ -1,6 +1,6 @@
 import json
 from openpyxl import Workbook, utils
-from openpyxl.styles import PatternFill, Font, Alignment
+from openpyxl.styles import PatternFill, Font, Alignment, Side, Border
 
 from modules.definiciones.Materia import Materia
 from modules.definiciones.Programa import Programa
@@ -121,4 +121,10 @@ class Exportador:
                 maxLen = max(len(str(celda.value)) for celda in columna)
                 ws.column_dimensions[utils.get_column_letter(columna[0].column)].width\
                     = maxLen if maxLen > 8 else 9
+                for celda in columna:
+                    celda.border = Border(top=Side(style='thin'),
+                                        right=Side(style='thin'),
+                                        left=Side(style='thin'),
+                                        bottom=Side(style='thin'),
+                                        )
         wb.save(self.archivo)

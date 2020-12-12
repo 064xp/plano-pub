@@ -71,9 +71,13 @@ class Ui_ResultadosForm(object):
         ResultadosForm.addToolBar(QtCore.Qt.TopToolBarArea, self.toolBar)
         self.actionGuardar = QtWidgets.QAction(ResultadosForm)
         self.actionGuardar.setObjectName("actionGuardar")
+        self.actionExportar_Excel = QtWidgets.QAction(ResultadosForm)
+        self.actionExportar_Excel.setObjectName("actionExportar_Excel")
         self.menuArchivo.addAction(self.actionGuardar)
+        self.menuArchivo.addAction(self.actionExportar_Excel)
         self.menubar.addAction(self.menuArchivo.menuAction())
         self.toolBar.addAction(self.actionGuardar)
+        self.toolBar.addAction(self.actionExportar_Excel)
 
         self.retranslateUi(ResultadosForm)
         self.tabWidget.setCurrentIndex(0)
@@ -88,3 +92,4 @@ class Ui_ResultadosForm(object):
         self.menuArchivo.setTitle(_translate("ResultadosForm", "Archivo"))
         self.toolBar.setWindowTitle(_translate("ResultadosForm", "toolBar"))
         self.actionGuardar.setText(_translate("ResultadosForm", "Guardar"))
+        self.actionExportar_Excel.setText(_translate("ResultadosForm", "Exportar Excel"))

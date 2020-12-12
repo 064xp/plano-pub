@@ -2,17 +2,20 @@ from PyQt5 import QtWidgets as qtw
 from PyQt5 import QtCore as qtc
 from PyQt5 import QtGui as qtg
 from modules.GUI.modulosUI.Items import *
-
 from modules.GUI.UIBase.ResultadosForm import Ui_ResultadosForm
+from modules.exportador import Exportador
 
 class ResultadosWindow(qtw.QMainWindow, Ui_ResultadosForm):
     def __init__(self, materias, archivo, alumnos):
         super().__init__()
         self.materias = materias
         self.alumnos = alumnos
+        self.archivo = archivo
         self.setupUi(self)
-        self.setWindowTitle(f'Resultados {archivo}')
+        self.setWindowTitle(f'Resultados {self.archivo}')
         self.show()
+
+        self.actionExportar_Excel.triggered.connect(self.exportar)
 
         # Tree view Grupos
         self.modeloGrupos = self.crearModeloGrupos()
@@ -77,3 +80,19 @@ class ResultadosWindow(qtw.QMainWindow, Ui_ResultadosForm):
                     if alumnoGrupo == alumno:
                         grupos.append(grupo)
         return grupos
+
+    def exportar(self):
+        try:
+            p = re.compile(r'[\\\/]([a-zA-Z]+).xlsx', re.IGNORECASE)
+            nombreDefault = p.search(self.archivo).group(1) + '_export.xlsx'
+        except:
+            nombreDefault = 'exportHorario.xlsx'
+
+        archivoGuardar =  qtw.QFileDialog.getSaveFileName(self, 'Exportar Archivo',
+            f'../{nombreDefault}', "Horario (*.xlsx)")[0]
+
+        if not archivoGuardar:
+            return
+
+        exportador = Exportador(archivoGuardar)
+        exportador.exportarExcel(self.materias)
