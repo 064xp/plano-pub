@@ -155,7 +155,7 @@ class Lector:
 
                     if celda.value is None:
                         pass
-                    elif type(celda.value) == int:
+                    elif type(celda.value) == int or type(celda.value) == float:
                         calificacion = celda.value
                     elif celda.value.isnumeric():
                         calificacion = int(celda.value)
