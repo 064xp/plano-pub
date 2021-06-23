@@ -1,19 +1,21 @@
 from modules.funcionesAyuda import FuncionesAyuda as ayuda
 
 class Alumno:
-    def __init__(self, registro, materiasPendientes, carrera, materiasPorCuatri = 0, cuatri = 1):
+    def __init__(self, registro, nombre, materiasPendientes, carrera, materiasPorCuatri = 0, cuatri = 1):
         self._registro = registro
+        self._nombre = nombre
         self.materiasPendientes = materiasPendientes
         self._carrera = carrera
         self.materiasPorCuatri = 0
         self.cuatri = 1
 
     def __str__(self):
-        return f'Alumno: {self._registro} Carrera: {self._carrera}'
+        return f'Alumno: {self._nombre} Registro: {self._registro} Carrera: {self._carrera}'
 
     def aDict(self):
         return {
             'registro': self.registro,
+            'nombre': self._nombre,
             'materiasPendientes': [ayuda.normalizar(materia.nombre) for materia in self.materiasPendientes],
             'carrera': self.carrera,
             'materiasPorCuatri': self.materiasPorCuatri,

@@ -29,6 +29,8 @@ class AsignadorHorarios:
                         horaSugerida+=1
 
                     if materia.tieneLab and not asignoLab:
+                        if not self.existeHorarioEn(diaStr,horaSugerida+1):
+                            self.tblHorarios[diaStr][str(horaSugerida+1)] = []
                         asignoLab = True
                         self.agregarHorario(grupo, diaStr, horaSugerida)
                         self.agregarHorario(grupo, diaStr, horaSugerida +1)

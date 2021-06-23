@@ -138,12 +138,13 @@ class Lector:
                      continue
                 try:
                      registro = int(fila[0].value)
+                     nombre = fila[1].value
                      materiasPendientes = []
                 except:
                      break
 
                 for celda in fila:
-                    if celda.column == 1:
+                    if celda.column in [1, 2]:
                         continue
 
                     try: # si ya no hay mas materias
@@ -167,7 +168,7 @@ class Lector:
                     if calificacion <= 5:
                         materiasPendientes.append(materia)
 
-                alumnos.append(Alumno(registro, materiasPendientes, hoja.title))
+                alumnos.append(Alumno(registro, nombre, materiasPendientes, hoja.title))
         return alumnos
 
     def _extraerMateriasWS(self, programa, prerequisitos):
@@ -184,7 +185,7 @@ class Lector:
             sys.exit(1)
 
         for celda in tuple(ws.rows)[1]:
-            if celda.column == 1:
+            if celda.column in [1, 2]:
                 continue
 
             materia = celda.value
