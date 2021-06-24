@@ -52,7 +52,7 @@ class Exportador:
         ## Cargar alumnos
         for alumno in load['alumnos']:
             alumnoActual = Alumno(
-                alumno['registro'], alumno['materiasPendientes'],
+                alumno['registro'], alumno['nombre'], alumno['materiasPendientes'],
                 alumno['carrera'], alumno['materiasPorCuatri'],
                 alumno['cuatri']
             )

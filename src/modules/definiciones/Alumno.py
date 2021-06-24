@@ -34,5 +34,9 @@ class Alumno:
         return self._registro
 
     @property
+    def nombre(self):
+        return self._nombre
+
+    @property
     def carrera(self):
         return self._carrera

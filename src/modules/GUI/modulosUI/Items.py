@@ -31,7 +31,7 @@ class AlumnosItem(qtg.QStandardItem):
         self.alumno = alumno
         self.grupos = grupos
         self.setEditable(False)
-        self.setText(f'Alumno: {self.alumno.registro}   '\
+        self.setText(f'Alumno: {self.alumno.nombre}  [{self.alumno.registro}]\t'\
         f'({self.alumno.carrera})\t'\
         f'Cuatri: {self.alumno.cuatri}\t'\
         f'Materias: {len(self.grupos)}\t')

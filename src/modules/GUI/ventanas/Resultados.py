@@ -84,9 +84,9 @@ class ResultadosWindow(qtw.QMainWindow, Ui_ResultadosForm):
     def exportar(self):
         try:
             p = re.compile(r'[\\\/]([a-zA-Z]+).xlsx', re.IGNORECASE)
-            nombreDefault = p.search(self.archivo).group(1) + '_export.xlsx'
+            nombreDefault = p.search(self.archivo).group(1) + '_export'
         except:
-            nombreDefault = 'exportHorario.xlsx'
+            nombreDefault = 'exportHorario'
 
         archivoGuardar =  qtw.QFileDialog.getSaveFileName(self, 'Exportar Archivo',
             f'../{nombreDefault}', "Horario (*.xlsx)")[0]
