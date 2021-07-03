@@ -41,6 +41,7 @@ class Lector:
                     prerequisitos[programa] = {}
 
                 prerequisitos[programa][ayuda.normalizar(materia)] = ayuda.normalizar(prerequisito)
+
         return prerequisitos
 
     def extraerCantidadMaterias(self, programa):
@@ -197,7 +198,12 @@ class Lector:
             try:
                 prerequisito = prerequisitos[programa][ayuda.normalizar(nombreMateria)]
             except:
-                prerequisito = None
+                # Si la materia tiene un numeral romano, agregar el anterior
+                # como prerrequisito
+                # ej. Ingles V > Ingles IV
+                prerequisito = ayuda.normalizar(ayuda.materiaNumeralAnterior(nombreMateria))
+                if prerequisito is not None:
+                    print(f'Prerequisito numeral, Materia: {nombreMateria}, preprequisito {prerequisito}')
 
             info = self.buscarMateriaEnMapas(nombreMateria, programa)
 

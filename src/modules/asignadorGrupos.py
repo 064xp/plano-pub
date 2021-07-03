@@ -17,17 +17,24 @@ class AsignadorGrupos:
 
     def asignarMaterias(self):
         for alumno in self.alumnos:
+            # Calcular cuatri en base a las primeras 10 materias
             materias = alumno.materiasPendientes[0:9]
             cuatri = self.calcularCuatri(materias, alumno.carrera, alumno.registro)
             alumno.cuatri = cuatri
 
             materiasPorCuatri = self.programas[alumno.carrera].materiasPorCuatri[cuatri-1]
             alumno.materiasPorCuatri = materiasPorCuatri
-            materias = alumno.materiasPendientes[0:materiasPorCuatri]
+            # materias = alumno.materiasPendientes[0:materiasPorCuatri]
+            materiasAsignadas = 0
+            for materia in alumno.materiasPendientes:
+                if materiasAsignadas == materiasPorCuatri:
+                    break
+                if self.cumpleConPrerequisitos(alumno, materia):
+                    materia.alumnos.append(alumno)
+                    materiasAsignadas += 1
 
-            for materia in materias:
-                materia.alumnos.append(alumno)
-
+            # for materia in materias:
+            #     materia.alumnos.append(alumno)
     def calcularCuatri(self, materiasPendientes, programa, alumno):
         cantidad = []
         cuatriMayor = max(materiasPendientes, key = lambda materia : materia.cuatri[programa]).cuatri[programa]
@@ -70,9 +77,16 @@ class AsignadorGrupos:
         for grupo in grupos:
             for alumno in grupo.alumnos:
                 alumno.materiasPendientes.remove(materia)
+                alumno.materiasAsignadas.append(ayuda.normalizar(materia.nombre))
                 alumno.materiasPorCuatri -= 1
 
     def cumpleConPrerequisitos(self, alumno, materia):
+        if materia.prerequisito is None:
+            return True
+
+        if(materia.prerequisito in alumno.materiasAsignadas):
+            return False
+
         for materiaPendiente in alumno.materiasPendientes:
             if materia.prerequisito == ayuda.normalizar(materiaPendiente.nombre):
                 return False
