@@ -28,7 +28,6 @@ class Main:
         self.ventanaBienvenida.nuevo.connect(lambda: self.ventanaEscogerArchivos.show())
 
     def comenzarAnalisis(self):
-
         asignadorG = AsignadorGrupos(self.alumnos, self.programas, self.materias)
         asignadorG.crearGrupos()
 
@@ -77,19 +76,18 @@ class Main:
             self.materias, self.alumnos, self.programas = exportador.cargar()
             self.ventanaBienvenida.close()
             self.mostrarResultados()
-        except:
+        except Exception:
             DialogoAlerta('Error de Lectura', 'Ocurrió un error al intentar leer el archivo')
 
     def cargarDeExcel(self):
         try:
             l = Lector(self.archivoPrincipal, self.archivoAdicional, self.mapas)
+            self.materias = l.extraerMaterias()
+            self.alumnos = l.extraerAlumnos(self.materias)
+            self.programas = l.extraerProgramas()
+            l.cerrarArchivos()
         except:
             DialogoAlerta('Error de Lectura', 'Hubo un error al intentar abrir los archivos')
-
-        self.materias = l.extraerMaterias()
-        self.alumnos = l.extraerAlumnos(self.materias)
-        self.programas = l.extraerProgramas()
-        l.cerrarArchivos()
 
 
 app = qtw.QApplication(sys.argv)

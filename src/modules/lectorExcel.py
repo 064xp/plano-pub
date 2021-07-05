@@ -4,6 +4,7 @@ from modules.definiciones.Programa import Programa
 from modules.definiciones.Alumno import Alumno
 from modules.funcionesAyuda import FuncionesAyuda as ayuda
 import sys
+import re
 
 class Lector:
     def __init__(self, archivoPrincipal, archivoAdicionales, mapasCurriculares):
@@ -11,6 +12,7 @@ class Lector:
         self._wbAdicional = load_workbook(filename=archivoAdicionales)
         self._mapas = self.cargarMapasCurriculares(mapasCurriculares)
         self._prerequisitos = self.extraerPrerequisitos()
+        self._materiasIgnoradas = self.extraerMateriasIgnoradas()
 
     def cerrarArchivos(self):
         self._wbPrincipal.close()
@@ -172,6 +174,31 @@ class Lector:
                 alumnos.append(Alumno(registro, nombre, materiasPendientes, hoja.title))
         return alumnos
 
+    def extraerMateriasIgnoradas(self):
+        '''
+        Extraer las materias que se deben ignorar de la hoja
+        'MateriasIgnoradas' del archivo de datos adicionales
+
+        Regresa una lista de regexp correspondiendo al nombre
+        de cada materia normalizado (minúsculas y sin acentos ni espacios)
+        '''
+        materias = []
+        try:
+            ws = self._wbAdicional['MateriasIgnoradas']
+        except:
+            print('Hoja con Materias Ignoradas no encontrado')
+            return []
+
+        for celda in tuple(ws.columns)[0]:
+            if celda.row != 1:
+                materia = celda.value
+                materia = materia.replace('*', '.+')
+                materia = ayuda.normalizar(materia)
+                materias.append(re.compile(materia, re.DOTALL))
+
+        return materias
+
+
     def _extraerMateriasWS(self, programa, prerequisitos):
         '''
         Extrae las materias de una hoja de Calculo
@@ -195,6 +222,10 @@ class Lector:
             except:
                 break
 
+            # Si está dentro de las materias ignoradas, ignorar y seguir
+            if self.esMateriaIgnorada(ayuda.normalizar(nombreMateria)):
+                continue
+
             try:
                 prerequisito = prerequisitos[programa][ayuda.normalizar(nombreMateria)]
             except:
@@ -202,8 +233,6 @@ class Lector:
                 # como prerrequisito
                 # ej. Ingles V > Ingles IV
                 prerequisito = ayuda.normalizar(ayuda.materiaNumeralAnterior(nombreMateria))
-                if prerequisito is not None:
-                    print(f'Prerequisito numeral, Materia: {nombreMateria}, preprequisito {prerequisito}')
 
             info = self.buscarMateriaEnMapas(nombreMateria, programa)
 
@@ -227,3 +256,9 @@ class Lector:
             info = valorDefault
 
         return info
+
+    def esMateriaIgnorada(self, nombreMateria):
+        for mi in self._materiasIgnoradas:
+            if mi.search(ayuda.normalizar(nombreMateria)):
+                return True
+        return False

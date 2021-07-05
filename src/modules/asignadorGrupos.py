@@ -35,16 +35,20 @@ class AsignadorGrupos:
 
             # for materia in materias:
             #     materia.alumnos.append(alumno)
+
     def calcularCuatri(self, materiasPendientes, programa, alumno):
         cantidad = []
-        cuatriMayor = max(materiasPendientes, key = lambda materia : materia.cuatri[programa]).cuatri[programa]
-        cantidad = [0 for i in range (cuatriMayor)]
+        try:
+            cuatriMayor = max(materiasPendientes, key = lambda materia : materia.cuatri[programa]).cuatri[programa]
+            cantidad = [0 for i in range (cuatriMayor)]
 
-        for materia in materiasPendientes:
-                cantidad[materia.cuatri[programa]-1]+=1
+            for materia in materiasPendientes:
+                    cantidad[materia.cuatri[programa]-1]+=1
 
-        cuatri = cantidad.index(max(cantidad))
-        return cuatri+1
+            cuatri = cantidad.index(max(cantidad))
+            return cuatri+1
+        except:
+            return 1
 
     def crearGruposEnOrden(self):
         for llaveMateria in self.materias.keys():
