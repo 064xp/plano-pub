@@ -8,6 +8,7 @@ class Alumno:
         self._carrera = carrera
         self.materiasPorCuatri = 0
         self.cuatri = 1
+        self.materiasAsignadas = []
 
     def __str__(self):
         return f'Alumno: {self._nombre} Registro: {self._registro} Carrera: {self._carrera}'

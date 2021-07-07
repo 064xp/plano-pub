@@ -26,16 +26,17 @@ class Main:
         self.ventanaBienvenida = Bienvenida()
         self.ventanaBienvenida.cargar.connect(self.cargarDeArchivo)
         self.ventanaBienvenida.nuevo.connect(lambda: self.ventanaEscogerArchivos.show())
+        self.errorLecturaArchivos = False
 
     def comenzarAnalisis(self):
+        if not self.errorLecturaArchivos:
+            asignadorG = AsignadorGrupos(self.alumnos, self.programas, self.materias)
+            asignadorG.crearGrupos()
 
-        asignadorG = AsignadorGrupos(self.alumnos, self.programas, self.materias)
-        asignadorG.crearGrupos()
+            asignadorH = AsignadorHorarios(self.materias, 7, 10)
+            asignadorH.asignar()
 
-        asignadorH = AsignadorHorarios(self.materias, 7, 10)
-        asignadorH.asignar()
-
-        self.mostrarResultados()
+            self.mostrarResultados()
 
     def setArchivos(self):
         principales = self.ventanaEscogerArchivos.datosPrincipales
@@ -77,19 +78,21 @@ class Main:
             self.materias, self.alumnos, self.programas = exportador.cargar()
             self.ventanaBienvenida.close()
             self.mostrarResultados()
-        except:
+        except Exception:
             DialogoAlerta('Error de Lectura', 'Ocurrió un error al intentar leer el archivo')
 
     def cargarDeExcel(self):
         try:
             l = Lector(self.archivoPrincipal, self.archivoAdicional, self.mapas)
-        except:
-            DialogoAlerta('Error de Lectura', 'Hubo un error al intentar abrir los archivos')
+            self.materias = l.extraerMaterias()
+            self.alumnos = l.extraerAlumnos(self.materias)
+            self.programas = l.extraerProgramas()
+            l.cerrarArchivos()
+            self.errorLecturaArchivos = False
+        except Exception as e:
+            DialogoAlerta('Error de Lectura', f'Hubo un error al intentar abrir los archivos\n{e}')
+            self.errorLecturaArchivos = True
 
-        self.materias = l.extraerMaterias()
-        self.alumnos = l.extraerAlumnos(self.materias)
-        self.programas = l.extraerProgramas()
-        l.cerrarArchivos()
 
 
 app = qtw.QApplication(sys.argv)
