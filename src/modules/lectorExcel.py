@@ -154,11 +154,13 @@ class Lector:
                         nombreMateria = ayuda.extraerNombreMateria(hoja.cell(column = celda.column, row = 2).value)
                         materia = materias[ayuda.normalizar(nombreMateria)]
                     except:
-                        break
-                    calificacion = 0
+                        # No se encontró la materia en el diccionario de materias, puede ser que sea
+                        # una materia ignorada
+                        continue
+
 
                     if celda.value is None:
-                        pass
+                        calificacion = 0
                     elif type(celda.value) == int or type(celda.value) == float:
                         calificacion = celda.value
                     elif celda.value.isnumeric():
@@ -166,7 +168,11 @@ class Lector:
                     elif celda.value == 'NI':
                         calificacion = 10
                     else:
-                        calificacion = 0
+                        # Si es un float en formato string
+                        try:
+                            calificacion = float(celda.value)
+                        except:
+                            calificacion = 0
 
                     if calificacion <= 5:
                         materiasPendientes.append(materia)

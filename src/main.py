@@ -26,15 +26,17 @@ class Main:
         self.ventanaBienvenida = Bienvenida()
         self.ventanaBienvenida.cargar.connect(self.cargarDeArchivo)
         self.ventanaBienvenida.nuevo.connect(lambda: self.ventanaEscogerArchivos.show())
+        self.errorLecturaArchivos = False
 
     def comenzarAnalisis(self):
-        asignadorG = AsignadorGrupos(self.alumnos, self.programas, self.materias)
-        asignadorG.crearGrupos()
+        if not self.errorLecturaArchivos:
+            asignadorG = AsignadorGrupos(self.alumnos, self.programas, self.materias)
+            asignadorG.crearGrupos()
 
-        asignadorH = AsignadorHorarios(self.materias, 7, 10)
-        asignadorH.asignar()
+            asignadorH = AsignadorHorarios(self.materias, 7, 10)
+            asignadorH.asignar()
 
-        self.mostrarResultados()
+            self.mostrarResultados()
 
     def setArchivos(self):
         principales = self.ventanaEscogerArchivos.datosPrincipales
@@ -86,8 +88,11 @@ class Main:
             self.alumnos = l.extraerAlumnos(self.materias)
             self.programas = l.extraerProgramas()
             l.cerrarArchivos()
-        except:
-            DialogoAlerta('Error de Lectura', 'Hubo un error al intentar abrir los archivos')
+            self.errorLecturaArchivos = False
+        except Exception as e:
+            DialogoAlerta('Error de Lectura', f'Hubo un error al intentar abrir los archivos\n{e}')
+            self.errorLecturaArchivos = True
+
 
 
 app = qtw.QApplication(sys.argv)
